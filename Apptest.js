@@ -15,6 +15,10 @@ const Student = mongoose.model("Student", studentSchema);
 
 const app = express(); //Create route to create a student 
 
+// Serve static files from the public dir
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: false })); //parses URL-encoded data
+
 //create route to create a student 
 // this is where we are using the variables
 // assumption is that we are getting information (req) 
