@@ -8,11 +8,29 @@ function UpdateSellerDisplayPicture()
     image.src = window.URL.createObjectURL(input.files[0]);
 }
 
+function SetTextFromJSON(jsonData)
+{
+    SetText(JSON.parse(jsonData))
+}
+
+function SetText(sellerData)
+{
+    document.getElementById("seller_picture_display").src = sellerData.seller_picture;
+    document.getElementById("seller_name").value = sellerData.seller_name;
+    document.getElementById("seller_website").value = sellerData.seller_website;
+    document.getElementById("seller_email").value = sellerData.seller_email;
+    document.getElementById("seller_phoneNumber").value = sellerData.seller_phoneNumber;
+    document.getElementById("seller_address").value = sellerData.seller_address;
+    document.getElementById("seller_summary").value = sellerData.seller_summary;
+    document.getElementById("seller_products").value = sellerData.seller_products;
+    document.getElementById("seller_partners").value = sellerData.seller_partners;
+}
+
 const EditOverview = () => {
     return (
-        <div>
+        <div className="editForm">
             <form action="/create" method="post">
-                <h1> Edit Profile: </h1>
+                <h2> Edit Profile: </h2>
 
                 <label for="seller_picture">Profile Picture:</label>
                 <br></br>
@@ -48,6 +66,16 @@ const EditOverview = () => {
                 <label for="seller_summary">Summary:</label>
                 <br></br>
                 <textarea required id="seller_summary" type="text" name="seller_summary"></textarea>
+                <br></br>
+
+                <label for="seller_products">Seller Products:</label>
+                <br></br>
+                <input required multiple type="text" id="seller_products" name="seller_products"></input>
+                <br></br>
+
+                <label for="seller_partners">Seller Partners:</label>
+                <br></br>
+                <input required multiple type="text" id="seller_partners" name="seller_partners"></input>
                 <br></br>
 
                 <br></br>
