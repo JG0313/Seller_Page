@@ -5,7 +5,7 @@ mongoose.connect("mongodb://127.0.0.1/Test"); //connect and create Test db
 
 //Create seller schema 
 const sellerSchema = new mongoose.Schema({
-  seller_picture: { type: String, required: true },
+  seller_picture: { type: Object, required: true },
   seller_name: { type: String, required: true },
   seller_website: { type: String, required: true },
   seller_email: { type: String, required: true },
@@ -21,7 +21,7 @@ const Seller = mongoose.model("Seller", sellerSchema);
 const app = express(); //Create route to create a seller 
 
 // Serve static files from the public dir
-app.use(express.static("pages")); //ANNA CHANGE
+app.use(express.static("pages")); 
 app.use(express.urlencoded({ extended: false })); //parses URL-encoded data
 
 //create route to create a seller 
@@ -49,7 +49,15 @@ app.post("/create", async(req, res) => {
     console.log(err);}
 });
 
+//Get user by ObjectID
+app.get('/getUserByID/:id', (request, response) => {
+    Seller.findById(request.params.id)
+    .then(data => response.json(data))
+    .catch(error => response.json(error))
+});
+
  //Server starts listening 
  app.listen(8080, function() {
     console.log("Server is listening at port 8080");
 });
+
