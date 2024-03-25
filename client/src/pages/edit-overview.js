@@ -11,7 +11,7 @@ function UpdateSellerDisplayPicture()
 const EditOverview = () => {
     return (
         <div>
-            <form className="editForm" action="/edit-overview/" method="post">
+            <form action="/create" method="post">
                 <h1> Edit Profile: </h1>
 
                 <label for="seller_picture">Profile Picture:</label>
