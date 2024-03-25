@@ -1,5 +1,6 @@
 import React from "react";
 import './styles/App.css';
+import app from './apptest.js';
 
 //Components
 import Navbar from "./components/Navbar";
@@ -13,7 +14,6 @@ import Partners from "./pages/partners";
 import Articles from "./pages/articles";
 import EditOverview from "./pages/edit-overview";
 
-
 function App() {
     return (
         <Router>
@@ -25,14 +25,8 @@ function App() {
                 <Route path="/partners" element={<Partners />} />
                 <Route path="/articles" element={<Articles />} />
                 <Route path="/edit-overview" element={<EditOverview />} />
-               
-
-
             </Routes>
         </Router>
-
-
- 
   );
 }
 

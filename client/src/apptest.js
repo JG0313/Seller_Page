@@ -9,7 +9,7 @@ const sellerSchema = new mongoose.Schema({
   seller_name: { type: String, required: true },
   seller_website: { type: String, required: true },
   seller_email: { type: String, required: true },
-  seller_phoneNumber: { type: Number, required: true },
+  seller_phoneNumber: { type: String, required: true },
   seller_address: { type: String, required: true },
   seller_summary: { type: String, required: true },
   userType: { type: String, default: "Seller" }
@@ -53,6 +53,7 @@ app.post("/create", async(req, res) => {
 app.get('/getUserByID/:id', (request, response) => {
     Seller.findById(request.params.id)
     .then(data => response.json(data))
+    res.render('overview', {title: 'test', items: rows})
     .catch(error => response.json(error))
 });
 
