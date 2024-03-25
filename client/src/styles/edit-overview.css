@@ -4,7 +4,7 @@
     margin-left: 30%;
 }
 
-.editForm > input
+.editForm > form > input
 {
     width: 50%;
 }
