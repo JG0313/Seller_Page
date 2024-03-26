@@ -1,0 +1,20 @@
+/* MiddleBar.css */
+.middlebar {
+    background-color: #ffc700;
+    color: #000000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    padding: 0 20px; /* Adjust padding as needed */
+}
+
+.middlebar-item {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+.middlebar-item:hover {
+    text-decoration: underline;
+}

@@ -1,23 +1,13 @@
 import React from "react";
-import { Nav, NavLink, NavMenu } from "./NavbarElements";
+import { Nav, NavMenu } from "./Navbar.styles";
+
 
 const Navbar = () => {
     return (
         <>
             <Nav>
+                <h1>Welcome to CAT 3DCP Digital Marketplace</h1> 
                 <NavMenu>
-                    <NavLink to="/overview" activeStyle>
-                        Overview
-                    </NavLink>
-                    <NavLink to="/products" activeStyle>
-                        Products
-                    </NavLink>
-                    <NavLink to="/articles" activeStyle>
-                        Articles
-                    </NavLink>
-                    <NavLink to="/partners" activeStyle>
-                        Partners
-                    </NavLink>
                 </NavMenu>
             </Nav>
         </>
