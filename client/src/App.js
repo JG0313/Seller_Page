@@ -1,6 +1,5 @@
 import React from "react";
 import './styles/App.css';
-import app from './apptest.js';
 
 //Components
 import Navbar from "./components/Navbar";
@@ -13,6 +12,8 @@ import Products from "./pages/products";
 import Partners from "./pages/partners";
 import Articles from "./pages/articles";
 import EditOverview from "./pages/edit-overview";
+import BaseEditOverview from "./pages/base-edit-overview";
+//import AppTest from "./apptest.js";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/partners" element={<Partners />} />
                 <Route path="/articles" element={<Articles />} />
                 <Route path="/edit-overview" element={<EditOverview />} />
+                <Route path="/base-edit-overview" element={<BaseEditOverview />} />
             </Routes>
         </Router>
   );

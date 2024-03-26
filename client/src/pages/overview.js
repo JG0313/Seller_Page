@@ -7,6 +7,9 @@ const Overview = () => {
                 OVERVIEW PAGE!!
             </h1>
             <form action="/edit-overview">
+                <input type="submit" value="Pretty Edit Page" />
+            </form>
+            <form action="/base-edit-overview">
                 <input type="submit" value="Edit Page" />
             </form>
         </div>
