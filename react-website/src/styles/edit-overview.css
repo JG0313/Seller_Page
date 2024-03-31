@@ -1,0 +1,21 @@
+.editForm
+{
+    width: 40%;
+    margin-left: 30%;
+}
+
+.editForm > form > input
+{
+    width: 50%;
+}
+
+#seller_picture_display
+{
+    width: 100px;
+}
+
+#seller_summary
+{
+    width: 100%;
+    resize: vertical;
+}

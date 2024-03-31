@@ -5,7 +5,7 @@ import TopBar from './TopBar';
 import MiddleBar from './MiddleBar';
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import axios from 'axios'; // Import Axios
+import axios from 'axios'; 
 
 // Pages
 import Overview from "./pages/overview";
