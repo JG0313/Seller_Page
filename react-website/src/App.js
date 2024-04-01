@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import './styles/App.css';
-import SideBar from './SideBar';
-import TopBar from './TopBar';
-import MiddleBar from './MiddleBar';
+import SideBar from './components/SideBar';
+import TopBar from './components/TopBar';
+import MiddleBar from './components/MiddleBar';
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from 'axios'; 
