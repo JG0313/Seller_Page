@@ -19,3 +19,23 @@
     width: 100%;
     resize: vertical;
 }
+
+.productThumbnailHolder
+{
+    background-color: bisque;
+}
+
+.productThumbnail
+{
+    background-color: bisque;
+}
+
+.partnerThumbnailHolder
+{
+    background-color: palegreen;
+}
+
+.partnerThumbnail
+{
+    background-color: palegreen;
+}
