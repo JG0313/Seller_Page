@@ -12,6 +12,7 @@ import Overview from "./pages/overview";
 import Products from "./pages/products";
 import Partners from "./pages/partners";
 import Articles from "./pages/articles";
+import BaseEditOverview from "./pages/base-edit-overview"; 
 
 function App() {
     const [data, setData] = useState(null);
@@ -79,6 +80,7 @@ function App() {
                             <Route path="/products" element={<Products />} />
                             <Route path="/partners" element={<Partners />} />
                             <Route path="/articles" element={<Articles />} />
+                            <Route path="/edit-overview" element={<BaseEditOverview />} />
                         </Routes>
                     </div>
                 </div>

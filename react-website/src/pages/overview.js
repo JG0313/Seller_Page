@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Overview = () => {
     return (
@@ -6,12 +7,10 @@ const Overview = () => {
             <h1>
                 OVERVIEW PAGE!!
             </h1>
-            <form action="/edit-overview">
-                <input type="submit" value="Pretty Edit Page" />
-            </form>
-            <form action="/base-edit-overview">
-                <input type="submit" value="Edit Page" />
-            </form>
+
+            <div>
+                <Link to="/edit-overview" className="btn btn-primary">hello</Link>
+            </div>
         </div>
     );
 };

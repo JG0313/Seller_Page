@@ -1,5 +1,5 @@
 import React from "react";
-import '../styles/edit-overview.css';
+import '../assets/edit-overview.css';
 
 function UpdateSellerDisplayPicture()
 {
