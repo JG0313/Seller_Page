@@ -69,6 +69,12 @@ app.get("/", (req, resp) => {
     // backend working properly
 });
 
+app.get('/getUsers', (req, res) => {
+    Seller.find()
+    .then(sellers => res.json(sellers))
+    .catch(err => res.json(err))
+});
+
 //Get user by ObjectID
 app.get('/getUserByID/:id', (request, response) => {
     Seller.findById(request.params.id)
