@@ -1,7 +1,7 @@
 // MiddleBar.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './MiddleBar.css';
+import '../assets/MiddleBar.css';
 
 const MiddleBar = () => {
     return (
