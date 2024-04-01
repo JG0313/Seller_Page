@@ -16,7 +16,7 @@ const BaseEditOverview = () => {
         let result = await fetch(
             'http://localhost:8080/create', {
                 method: "post",
-                body: JSON.stringify({ seller_name, seller_email, seller_phoneNumber, seller_summary }),
+                body: JSON.stringify({ seller_name, seller_website, seller_email, seller_phoneNumber, seller_address, seller_summary }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
