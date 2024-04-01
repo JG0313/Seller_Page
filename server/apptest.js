@@ -74,6 +74,7 @@ app.get('/getUserByID/:id', (request, response) => {
     Seller.findById(request.params.id)
     .then(data => response.json(data))
     .catch(error => response.json(error))
+    console.log(data)
 });
 
  //Server starts listening 
