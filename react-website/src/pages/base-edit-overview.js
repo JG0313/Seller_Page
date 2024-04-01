@@ -59,7 +59,7 @@ const BaseEditOverview = () => {
             <label for="seller_email">Seller Email:</label>
             <br></br>
             <input required type="email" id="seller_email" name="seller_email" 
-            onChange={(e) => seller_email(e.target.value)} 
+            onChange={(e) => setEmail(e.target.value)} 
             value = { seller_email }></input>
             <br></br>
 
@@ -84,7 +84,6 @@ const BaseEditOverview = () => {
             value = { seller_summary }></textarea>
             <br></br>
 
-            // Will update after talking to other team
             <label for="seller_products">Seller Products:</label>
             <br></br>
             <input required multiple type="text" id="seller_products" name="seller_products"></input>
