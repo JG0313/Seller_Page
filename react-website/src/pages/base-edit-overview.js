@@ -71,14 +71,9 @@ function BaseEditOverview()
 
     function AddPartner()
     {
-        let partnerID = document.getElementById('partner_name').value;
+        if(se)
 
-        if(seller.seller_partners.includes(partnerID))
-        {
-            return;
-        }
-
-        seller.seller_partners.push(partnerID);
+        seller.seller_partners.push(document.getElementById('partner_name').value);
         partnerRoot.render(<PartnerThumbnails partners={seller.seller_partners} /> );
     }
 
@@ -167,7 +162,7 @@ class ProductThumbnails extends Component
         return (
             <div className="thumbnailHolder"> 
             {         
-                this.props.products.map(product_ID => <ProductThumbnail key={product_ID} product_ID = {product_ID} />)
+                this.props.products.map(product_ID => <ProductThumbnail key = {product_ID} product_ID = {product_ID} />)
             }
             <br></br>
             </div>
@@ -200,7 +195,7 @@ class PartnerThumbnails extends Component
         return (
             <div className="thumbnailHolder"> 
             {         
-                this.props.partners.map(partner_ID => <PartnerThumbnail key={partner_ID} partner_ID = {partner_ID}/>)
+                this.props.partners.map(partner_ID => <PartnerThumbnail key = {partner_ID} partner_ID = {partner_ID}/>)
             }
             </div>
         )
