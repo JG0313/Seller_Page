@@ -1,21 +1,29 @@
 import React, { Component } from "react";
 import '../assets/edit-overview.css';
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import { createRoot } from 'react-dom/client';
+import axios from 'axios';
+
+var productRoot;
+var partnerRoot;
 
 const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
-const BaseEditOverview = () => {
-
-    const [seller_website, setWebsite] = useState("");
-    const [seller_summary, setSummary] = useState("");
+function BaseEditOverview()
+{
+    const [seller,  setSeller] = useState([])
+    useEffect(()=> {
+        axios.get("http://localhost:8080/getUserByID?id=" + "660322de66ad374e72b6a49e")
+        .then(seller => setSeller(seller.data))
+        .catch(err => console.log(err))
+    })
 
     const handleOnSubmit = async(e) => {
         e.preventDefault();
         let result = await fetch(
             'http://localhost:8080/create', {
                 method: "post",
-                body: JSON.stringify({ seller_website, seller_summary }),
+                body: JSON.stringify(seller),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -24,12 +32,10 @@ const BaseEditOverview = () => {
         console.warn(result);
         if (result) {
             alert("Data saved succesfully");
-            setSummary("");
-            setWebsite("");
         }
     }
 
-    window.addEventListener('load', LoadDataToEditPage);
+    window.addEventListener('load', LoadDataToEditPage(seller));
 
     return ( 
     <div className="editForm">
@@ -49,15 +55,15 @@ const BaseEditOverview = () => {
 
         <label htmlFor="seller_website">Seller Website:</label><br></br>
         <input required type="url" id="seller_website" name="seller_website" 
-        onChange={(e) => setWebsite(e.target.value)} 
-        value = { seller_website }></input>
+        onChange={(e) => seller.seller_website = e.target.value} 
+        ></input>
         <br></br>
 
         <label htmlFor="seller_summary">Summary:</label>
         <br></br>
         <textarea required id="seller_summary" type="text" name="seller_summary" 
-        onChange={(e) => setSummary(e.target.value)} 
-        value = { seller_summary }></textarea>
+        onChange={(e) => seller.seller_summary = e.target.value} 
+        ></textarea>
         <br></br>
 
         {/* Will update after talking to other team */}
@@ -95,33 +101,36 @@ function UpdateSellerDisplayPicture()
     image.src = window.URL.createObjectURL(input.files[0]);
 }
 
-function LoadDataToEditPage()
+function LoadDataToEditPage(loadedUserData)
 {
-    // Get Data From Database
-    // dummy data rn
-    let data = GetUserFromID(1234);
+    console.log(loadedUserData);
 
     // Load User Name
-    document.getElementById("seller_name").innerText = data.seller_name;
+    if(!Object.hasOwn(loadedUserData, "seller_name")) { Object.assign(loadedUserData, {"seller_name": ""}) }
+    document.getElementById("seller_name").innerText = loadedUserData.seller_name;
     // Load Existing Summary
-    document.getElementById("seller_summary").value = data.seller_summary;
+    if(!Object.hasOwn(loadedUserData, "seller_summary")) { Object.assign(loadedUserData, {"seller_summary": ""}) }
+    document.getElementById("seller_summary").value = loadedUserData.seller_summary;
     // Load Existing Website
-    document.getElementById("seller_website").value = data.seller_website;
+    if(!Object.hasOwn(loadedUserData, "seller_website")) { Object.assign(loadedUserData, {"seller_website": ""}) }
+    document.getElementById("seller_website").value = loadedUserData.seller_website;
 
     // Load Existing Products
-    if(Object.hasOwn(data, 'seller_products') && data.seller_products.length > 0)
+    if(!Object.hasOwn(loadedUserData, "seller_products")) { Object.assign(loadedUserData, {"seller_products": []}) }
+    if(loadedUserData.seller_products.length > 0)
     {
         let domNode = document.getElementById('seller_products');
-        let root = createRoot(domNode);
-        root.render(<ProductThumbnails products={data.seller_products} /> )
+        productRoot = createRoot(domNode);
+        productRoot.render(<ProductThumbnails products={loadedUserData.seller_products} /> )
     }
 
     // Load Existing Partners
-    if(Object.hasOwn(data, 'seller_partners') && data.seller_partners.length > 0)
+    if(!Object.hasOwn(loadedUserData, "seller_partners")) { Object.assign(loadedUserData, {"seller_partners": []}) }
+    if(loadedUserData.seller_partners.length > 0)
     {
         let domNode = document.getElementById('seller_partners');
-        let root = createRoot(domNode);
-        root.render(<PartnerThumbnails partners={data.seller_partners} /> )
+        partnerRoot = createRoot(domNode);
+        partnerRoot.render(<PartnerThumbnails partners={loadedUserData.seller_partners} /> )
     }
 }
 
@@ -139,11 +148,6 @@ function GetPartnerFromID(partner_ID)
     // if key is not in database
     if(!(partner_ID in dummyPartnerDictionary)) { return null; }
     return dummyPartnerDictionary[partner_ID];
-}
-
-function GetUserFromID(user_ID)
-{
-    return dummyUser;
 }
 
 //#endregion
@@ -227,7 +231,7 @@ function AddProduct()
 
 function RemovePartner(partner_ID)
 {
-    console.log(partner_ID);
+
 }
 
 function EditProductPage(product_ID)
