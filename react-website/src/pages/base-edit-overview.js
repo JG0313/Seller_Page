@@ -23,9 +23,27 @@ function BaseEditOverview()
         try
         {
             const res = await axios.get("http://localhost:8080/getUserByID?id=" + sellerID);
-            setSeller(res.data);
+
             document.getElementById('seller_website').value = res.data.seller_website;
             document.getElementById('seller_summary').value = res.data.seller_summary;
+
+            if(!Object.hasOwn(res.data, "seller_products")) { Object.assign(res.data, {"seller_products": []}) }
+
+            if(productRoot == null)
+            {
+                productRoot = createRoot(document.getElementById('seller_products'));
+            }
+            productRoot.render(<ProductThumbnails products={res.data.seller_products} /> )
+
+            if(!Object.hasOwn(res.data, "seller_partners")) { Object.assign(res.data, {"seller_partners": []}) }
+
+            if(partnerRoot == null)
+            {
+                partnerRoot = createRoot(document.getElementById('seller_partners'));
+            }
+            partnerRoot.render(<PartnerThumbnails partners={res.data.seller_partners} /> );
+
+            setSeller(res.data);
         }
         catch (error)
         {
@@ -51,59 +69,73 @@ function BaseEditOverview()
         }
     }
 
+    function AddPartner()
+    {
+        let partnerID = document.getElementById('partner_name').value;
+
+        if(seller.seller_partners.includes(partnerID))
+        {
+            return;
+        }
+
+        seller.seller_partners.push(partnerID);
+        partnerRoot.render(<PartnerThumbnails partners={seller.seller_partners} /> );
+    }
+
     return ( 
     <div className="editForm">
-        <h1> Edit Profile </h1> 
+        <form action="">
+            <h1> Edit Profile </h1> 
 
-        <h2 id = "seller_name"> {seller.seller_name} </h2> 
+            <h2 id = "seller_name"> {seller.seller_name} </h2> 
 
-        <label htmlFor="seller_picture">Profile Picture:</label>
-        <br></br>
+            <label htmlFor="seller_picture">Profile Picture:</label>
+            <br></br>
 
-        <img alt = "seller profile" id = "seller_picture_display" src={defaultImage}></img>
-        <br></br>
+            <img alt = "seller profile" id = "seller_picture_display" src={defaultImage}></img>
+            <br></br>
 
-        <input required type="file" id="seller_picture" name="seller_picture" 
-        onChange={UpdateSellerDisplayPicture} accept="image/png, image/jpeg"></input>
-        <br></br>
+            <input type="file" id="seller_picture" name="seller_picture" 
+            onChange={UpdateSellerDisplayPicture} accept="image/png, image/jpeg"></input>
+            <br></br>
 
-        <label htmlFor="seller_website">Seller Website:</label><br></br>
-        <input required type="url" id="seller_website" name="seller_website" 
-        onChange={(e) => seller.seller_website = e.target.value}
-        ></input>
-        <br></br>
+            <label htmlFor="seller_website">Seller Website:</label><br></br>
+            <input type="url" id="seller_website" name="seller_website" 
+            onChange={(e) => seller.seller_website = e.target.value}
+            ></input>
+            <br></br>
 
-        <label htmlFor="seller_summary">Summary:</label>
-        <br></br>
-        <textarea required id="seller_summary" type="text" name="seller_summary" 
-        onChange={(e) => seller.seller_summary = e.target.value} 
-        ></textarea>
-        <br></br>
+            <label htmlFor="seller_summary">Summary:</label>
+            <br></br>
+            <textarea id="seller_summary" type="text" name="seller_summary" 
+            onChange={(e) => seller.seller_summary = e.target.value} 
+            ></textarea>
+            <br></br>
 
-        {/* Will update after talking to other team */}
+            {/* Will update after talking to other team */}
 
-        <label htmlFor="seller_products"><h2>Products:</h2></label>
+            <label htmlFor="seller_products"><h2>Products:</h2></label>
 
-        <div id = "seller_products">
-            <ProductThumbnails products={Object.hasOwn(seller, 'seller_products') ? seller.seller_products : []} />
-        </div>
+            <div id = "seller_products">
+            </div>
 
-        <br></br>
-        <button onClick = { AddProduct } > Add Product </button>
-        <br></br>
+            {/*<br></br>
+            <button type="button" onClick = { AddProduct } > Add Product </button>
+            <br></br>*/}
 
-        <label htmlFor="seller_partners"><h2>Partners:</h2></label>
+            <label htmlFor="seller_partners"><h2>Partners:</h2></label>
 
-        <div id = "seller_partners">
-            <PartnerThumbnails partners={Object.hasOwn(seller, 'seller_partners') ? seller.seller_partners : []} />
-        </div>
+            <div id = "seller_partners">
+            </div>
 
-        <br></br>
-        <button onClick = { AddPartner } > Add Partner </button>
-        <br></br>
+            <br></br>
+            <input id="partner_name" name="partner_name" ></input>
+            <button type="button" onClick = { AddPartner } > Add Partner </button>
+            <br></br>
 
-        <br></br>
-        <button type = "submit" onClick = { handleOnSubmit } > Save Changes </button> 
+            <br></br>
+            <button type = "submit" onClick = { handleOnSubmit } > Save Changes </button> 
+        </form>
     </div>
     );
 };
@@ -122,13 +154,6 @@ function GetProductFromID(product_ID)
     // if key is not in database
     if(!(product_ID in dummyProductDictionary)) { return null; }
     return dummyProductDictionary[product_ID];
-}
-
-function GetPartnerFromID(partner_ID)
-{
-    // if key is not in database
-    if(!(partner_ID in dummyPartnerDictionary)) { return null; }
-    return dummyPartnerDictionary[partner_ID];
 }
 
 //#endregion
@@ -162,7 +187,7 @@ class ProductThumbnail extends Component
             <div className="thumbnail">
                 <p>{product.product_name}</p>
                 <p>${product.product_price}</p>
-                <button onClick={this.handleClick}>Edit Product</button>
+                <button type="button" onClick={this.handleClick}>Edit Product</button>
             </div>
         )
     }
@@ -184,28 +209,37 @@ class PartnerThumbnails extends Component
 
 class PartnerThumbnail extends Component
 {
-    handleClick = () => { RemovePartner(this.props.partner_ID); };
-    render() {
-        let partner = GetPartnerFromID(this.props.partner_ID);
+    render () {
+        let thumbnailID = "partnerThumnail_" + this.props.partner_ID + "_" + this.props.index;
+        GetPartnerFromID(this.props.partner_ID, thumbnailID);
 
-        if(partner == null) { return null; }
-
-        return (
-            <div className="thumbnail">
-                <p>{partner.partner_name}</p>
-                <button onClick={this.handleClick}>Remove Partner</button>
+        return(
+            <div id = {thumbnailID} className="thumbnail">
+                <p>Loading...</p>
             </div>
         )
     }
 }
+
+const GetPartnerFromID = async(partner_ID, thumbnailID) =>
+{
+    let outPartner = null;
+    await axios.get("http://localhost:8080/getUserByID?id=" + partner_ID)
+    .then(partner => outPartner = partner.data)
+    .catch(err => outPartner = null)
+
+    if(outPartner !== null)
+    {
+        document.getElementById(thumbnailID).innerHTML = 
+        `
+            <p>${outPartner.seller_name}</p>
+        `
+    }
+}
+
 //#endregion
 
 //#region Partner and Product Functions
-
-function AddPartner()
-{
-    // link to add partner page
-}
 
 function AddProduct()
 {
@@ -233,26 +267,6 @@ const dummyProductDictionary =
     1003 : {product_name : "stuff3", product_price : "12"},
     1004 : {product_name : "stuff4", product_price : "3"}
 }
-
-const dummyPartnerDictionary =
-{
-    1001 : {partner_name : "guy"},
-}
-
-const dummyUser =
-{
-    seller_name : 'Anthony Drapeau',
-    seller_summary : 'does stuff',
-    seller_website : 'https://www.mundanepixel.com/',
-    seller_products : 
-    [
-        1001, 1002, 1003, 1004
-    ],
-    seller_partners : 
-    [
-        1001
-    ]
-};
 
 //#endregion
 
