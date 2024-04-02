@@ -4,6 +4,8 @@ import { useState , useEffect} from 'react';
 import { createRoot } from 'react-dom/client';
 import axios from 'axios';
 
+var seller;
+var sellerID = "660b8c7240b171e3ad709c51";;
 var productRoot;
 var partnerRoot;
 
@@ -11,9 +13,6 @@ const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Defaul
 
 function BaseEditOverview()
 {
-    const [sellerID, setSellerID] = useState("660b8c7240b171e3ad709c51");
-    var [seller,  setSeller] = useState([])
-
     useEffect(()=> {
         handleDataLoad();
     }, [])
@@ -26,6 +25,7 @@ function BaseEditOverview()
 
             document.getElementById('seller_website').value = res.data.seller_website;
             document.getElementById('seller_summary').value = res.data.seller_summary;
+            document.getElementById('seller_name').value = res.data.seller_name;
 
             if(!Object.hasOwn(res.data, "seller_products")) { Object.assign(res.data, {"seller_products": []}) }
 
@@ -33,7 +33,7 @@ function BaseEditOverview()
             {
                 productRoot = createRoot(document.getElementById('seller_products'));
             }
-            productRoot.render(<ProductThumbnails products={res.data.seller_products} /> )
+            productRoot.render(<ProductThumbnails /> )
 
             if(!Object.hasOwn(res.data, "seller_partners")) { Object.assign(res.data, {"seller_partners": []}) }
 
@@ -43,7 +43,7 @@ function BaseEditOverview()
             }
             partnerRoot.render(<PartnerThumbnails partners={res.data.seller_partners} /> );
 
-            setSeller(res.data);
+            seller = res.data;
         }
         catch (error)
         {
@@ -67,16 +67,15 @@ function BaseEditOverview()
         if (result) {
             alert("Data saved succesfully");
         }
+
+        window.location.reload();
     }
 
     function AddPartner()
     {
         let partnerID = document.getElementById('partner_name').value;
 
-        if(seller.seller_partners.includes(partnerID))
-        {
-            return;
-        }
+        if(seller.seller_partners.includes(partnerID)) { return; }
 
         seller.seller_partners.push(partnerID);
         partnerRoot.render(<PartnerThumbnails partners={seller.seller_partners} /> );
@@ -87,7 +86,7 @@ function BaseEditOverview()
         <form action="">
             <h1> Edit Profile </h1> 
 
-            <h2 id = "seller_name"> {seller.seller_name} </h2> 
+            <h2 id = "seller_name"> Name </h2> 
 
             <label htmlFor="seller_picture">Profile Picture:</label>
             <br></br>
@@ -147,27 +146,20 @@ function UpdateSellerDisplayPicture()
     image.src = window.URL.createObjectURL(input.files[0]);
 }
 
-//#region Get Database Values
-
-function GetProductFromID(product_ID)
+function GetProductsFromID(seller_ID)
 {
-    // if key is not in database
-    if(!(product_ID in dummyProductDictionary)) { return null; }
-    return dummyProductDictionary[product_ID];
+    return dummyProducts;
 }
-
-//#endregion
 
 //#region Visual Components
 
 class ProductThumbnails extends Component
 {
     render() {
-        if(this.props.products === null) {return;}
         return (
             <div className="thumbnailHolder"> 
             {         
-                this.props.products.map(product_ID => <ProductThumbnail key={product_ID} product_ID = {product_ID} />)
+                GetProductsFromID(sellerID).map(product => <ProductThumbnail key={product} product = {product} />)
             }
             <br></br>
             </div>
@@ -177,16 +169,11 @@ class ProductThumbnails extends Component
 
 class ProductThumbnail extends Component
 {
-    handleClick = () => { EditProductPage(this.props.product_ID); };
     render() {
-        let product = GetProductFromID(this.props.product_ID);
-
-        if(product == null) { return null; }
-
         return (
             <div className="thumbnail">
-                <p>{product.product_name}</p>
-                <p>${product.product_price}</p>
+                <p>{this.props.product.product_name}</p>
+                <p>${this.props.product.product_price}</p>
                 <button type="button" onClick={this.handleClick}>Edit Product</button>
             </div>
         )
@@ -233,41 +220,26 @@ const GetPartnerFromID = async(partner_ID, thumbnailID) =>
         document.getElementById(thumbnailID).innerHTML = 
         `
             <p>${outPartner.seller_name}</p>
+            <button type="button" onClick = ${RemovePartner(partner_ID)}>Remove</button>
         `
     }
 }
 
-//#endregion
-
-//#region Partner and Product Functions
-
-function AddProduct()
-{
-    // link to add product page
-}
-
 function RemovePartner(partner_ID)
 {
+    const index = seller.seller_partners.indexOf(partner_ID);
 
+    if (index > -1) { // only splice array when item is found
+        seller.seller_partners.splice(index, 1); // 2nd parameter means remove one item only
+    }
 }
 
-function EditProductPage(product_ID)
-{
-    console.log(product_ID);
-}
-
-//#endregion
-
-//#region Dummy Values
-
-const dummyProductDictionary =
-{
-    1001 : {product_name : "stuffsssssssssssssssssssssss", product_price : "20"},
-    1002 : {product_name : "stuff2", product_price : "50"},
-    1003 : {product_name : "stuff3", product_price : "12"},
-    1004 : {product_name : "stuff4", product_price : "3"}
-}
-
-//#endregion
+const dummyProducts =
+[
+    {product_name : "stuffsssssssssssssssssssssss", product_price : "20"},
+    {product_name : "stuff2", product_price : "50"},
+    {product_name : "stuff3", product_price : "12"},
+    {product_name : "stuff4", product_price : "3"}
+]
 
 export default BaseEditOverview;

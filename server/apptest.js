@@ -18,7 +18,6 @@ const sellerSchema = new mongoose.Schema({
     seller_phoneNumber: { type: String, required: true },
     seller_address: { type: String, required: false },
     seller_summary: { type: String, required: true },
-    seller_products: { type: Array, required: true},
     seller_partners: { type: Array, required: true},
     userType: { type: String, default: "Seller" }
 }); 
@@ -49,7 +48,6 @@ app.post("/create", async(req, res) => {
     seller_phoneNumber: req.body.seller_phoneNumber,
     seller_address: req.body.seller_address,
     seller_summary: req.body.seller_summary,
-    seller_products: req.body.seller_products,
     seller_partners: req.body.seller_partners,
     });
  

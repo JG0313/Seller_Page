@@ -4,7 +4,7 @@
     margin-left: 30%;
 }
 
-.editForm > input
+.editForm > form > input
 {
     width: 50%;
 }
@@ -31,6 +31,7 @@
     box-sizing: border-box;
     width: calc(50% - 8px);
     height: fit-content;
+    min-height: 28px;
     margin: 4px;
     border-radius: 5px;
     background-color: #FFE699;
