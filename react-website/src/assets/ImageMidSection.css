@@ -1,0 +1,46 @@
+/* image section */
+.image-mid-section{
+    width: 100%;
+    height: 600px;
+    padding: 50px 5vw;
+   }
+   .image-collage{
+    width: 100%;
+    height: 100%;
+    background: url(../img/bg-1.png);
+    background-size: cover;
+   }
+   .image-collection{
+    position: relative;
+    display: block;
+    width: 50%;
+    height: 100%;
+    background: #fff;
+    margin: auto;
+   }
+   .collage-img{
+    position: absolute;
+    object-fit: cover;
+    transition: .5s;
+   }
+   .collage-img:nth-child(1){
+    width: 350px;
+    height: 350px;
+    top: 20px;
+    left: 40px;
+   }
+   .collage-img:nth-child(2){
+    width: 250px;
+    height: 250px;
+    top: 200px;
+    left: 200px;
+   }
+   .collage-img:nth-child(3){
+    width: 250px;
+    height: 250px;
+    top: 100px;
+    left: 350px;
+   }
+   .collage-img:hover{
+    transform: translateY(-10px);
+   }
