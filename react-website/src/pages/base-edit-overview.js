@@ -4,7 +4,6 @@ import { useState , useEffect} from 'react';
 import { createRoot } from 'react-dom/client';
 import axios from 'axios';
 
-var once = false;
 var productRoot;
 var partnerRoot;
 
@@ -16,14 +15,23 @@ function BaseEditOverview()
     var [seller,  setSeller] = useState([])
 
     useEffect(()=> {
-        if(!once)
+        handleDataLoad();
+    }, [])
+
+    const handleDataLoad = async() =>
+    {
+        try
         {
-            axios.get("http://localhost:8080/getUserByID?id=" + sellerID)
-            .then(seller => setSeller(seller.data))
-            .catch(err => console.log(err))
-            once = true;
+            const res = await axios.get("http://localhost:8080/getUserByID?id=" + sellerID);
+            setSeller(res.data);
+            document.getElementById('seller_website').value = res.data.seller_website;
+            document.getElementById('seller_summary').value = res.data.seller_summary;
         }
-    })
+        catch (error)
+        {
+
+        }
+    }
 
     const handleOnSubmit = async(e) => {
         e.preventDefault();
@@ -62,7 +70,6 @@ function BaseEditOverview()
         <label htmlFor="seller_website">Seller Website:</label><br></br>
         <input required type="url" id="seller_website" name="seller_website" 
         onChange={(e) => seller.seller_website = e.target.value}
-        value={seller.seller_website}
         ></input>
         <br></br>
 
@@ -70,7 +77,6 @@ function BaseEditOverview()
         <br></br>
         <textarea required id="seller_summary" type="text" name="seller_summary" 
         onChange={(e) => seller.seller_summary = e.target.value} 
-        value={seller.seller_summary}
         ></textarea>
         <br></br>
 
