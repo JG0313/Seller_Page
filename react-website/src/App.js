@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import './assets/App.css';
 import Navbar from './components/Navbar';
 import Header from './pages/Header';
@@ -6,6 +7,7 @@ import ProductSection from './pages/ProductSection';
 import MidSection from './pages/MidSection';
 import ImageMidSection from './pages/ImageMidSection';
 import ReviewSection from './pages/ReviewSection';
+import EditPage from './pages/base-edit-overview.js';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from 'axios';
 
@@ -41,12 +43,13 @@ function App() {
                                 <Route path="/midSection" element={<MidSection />} />
                                 <Route path="/imageMidSection" element={<ImageMidSection />} />
                                 <Route path="/reviewSection" element={<ReviewSection />} />
+                                <Route path="/edit-overview" element={<EditPage />} />
                             </Routes>
                         </div>
                     </div>
                 </div>
             </div>
-
+            <Link to="/edit-overview" className="btn btn-primary">hello</Link>
             <div className="w-100 vh-100 d-flex justify-content-center align-items-center">
                 <div className="w-50">
                     <table className="table">

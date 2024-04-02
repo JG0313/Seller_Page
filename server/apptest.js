@@ -11,14 +11,16 @@ mongoose.connect("mongodb://127.0.0.1/Test", {//connect and create Test db
 
 //Create seller schema 
 const sellerSchema = new mongoose.Schema({
-  seller_picture: { type: Object, required: false },
-  seller_name: { type: String, required: true },
-  seller_website: { type: String, required: false },
-  seller_email: { type: String, required: true, unique: true },
-  seller_phoneNumber: { type: String, required: true },
-  seller_address: { type: String, required: false },
-  seller_summary: { type: String, required: true },
-  userType: { type: String, default: "Seller" }
+    seller_picture: { type: Object, required: false },
+    seller_name: { type: String, required: true },
+    seller_website: { type: String, required: false },
+    seller_email: { type: String, required: true, unique: true },
+    seller_phoneNumber: { type: String, required: true },
+    seller_address: { type: String, required: false },
+    seller_summary: { type: String, required: true },
+    seller_products: { type: Array, required: true},
+    seller_partners: { type: Array, required: true},
+    userType: { type: String, default: "Seller" }
 }); 
 
 //Create a seller model 
@@ -46,17 +48,32 @@ app.post("/create", async(req, res) => {
     seller_email: req.body.seller_email,
     seller_phoneNumber: req.body.seller_phoneNumber,
     seller_address: req.body.seller_address,
-    seller_summary: req.body.seller_summary
+    seller_summary: req.body.seller_summary,
+    seller_products: req.body.seller_products,
+    seller_partners: req.body.seller_partners,
     });
  
  // Adding record using save() method 
  // and replacing call back function with await
  try {
-    const result = await sel.save();
+    const result = await sel.save(true);
     console.log(result);
     res.send("The seller with id " + result._id + "is inserted");
 } catch (err) {
     console.log(err);}
+});
+
+app.post("/update", async(req, res) =>
+{
+    try 
+    {
+        const result = await Seller.findByIdAndUpdate(req.query.id, req.body);
+        console.log(result);
+    } 
+    catch (err) 
+    {
+        console.log(err);
+    }
 });
 
 app.get("/", (req, resp) => {
