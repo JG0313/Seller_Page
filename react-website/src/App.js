@@ -79,19 +79,6 @@ function App() {
             </table>
             </div>
         </div>
-        <div>
-            <p>{sellerID}</p>
-            <p>The selected seller's name is {seller.seller_name}, email is {seller.seller_email}, and phone number is {seller.seller_phoneNumber}</p>
-            <button onClick={()=> setSellerID("6602577ce48e1e8ccd381882")}>
-                Seller 1
-            </button>
-            <button onClick={()=> setSellerID("660257bee48e1e8ccd381884")}>
-                Seller 2
-            </button>
-            <button onClick={()=> setSellerID("660af60ec30674a9825f7109")}>
-                Seller 3
-            </button>
-        </div>
     </Router>
 );
 
