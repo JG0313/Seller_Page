@@ -3,6 +3,7 @@ import '../assets/edit-overview.css';
 import { useState , useEffect} from 'react';
 import { createRoot } from 'react-dom/client';
 import axios from 'axios';
+import e from "cors";
 
 var seller;
 var sellerID = "660b8c7240b171e3ad709c51";;
@@ -19,15 +20,16 @@ function BaseEditOverview()
 
     const handleDataLoad = async() =>
     {
-        try
+        const res = await axios.get("http://localhost:8080/getUserByID?id=" + sellerID);
+        if(res.data.name == "CastError")
         {
-            const res = await axios.get("http://localhost:8080/getUserByID?id=" + sellerID);
-
+            return;
+        }
+        else
+        {
             document.getElementById('seller_website').value = res.data.seller_website;
             document.getElementById('seller_summary').value = res.data.seller_summary;
-            document.getElementById('seller_name').value = res.data.seller_name;
-
-            if(!Object.hasOwn(res.data, "seller_products")) { Object.assign(res.data, {"seller_products": []}) }
+            document.getElementById('seller_name').innerText = res.data.seller_name;
 
             if(productRoot == null)
             {
@@ -44,10 +46,6 @@ function BaseEditOverview()
             partnerRoot.render(<PartnerThumbnails partners={res.data.seller_partners} /> );
 
             seller = res.data;
-        }
-        catch (error)
-        {
-
         }
     }
 
@@ -146,7 +144,7 @@ function UpdateSellerDisplayPicture()
     image.src = window.URL.createObjectURL(input.files[0]);
 }
 
-function GetProductsFromID(seller_ID)
+function GetProductsFromSellerID(seller_ID)
 {
     return dummyProducts;
 }
@@ -159,7 +157,7 @@ class ProductThumbnails extends Component
         return (
             <div className="thumbnailHolder"> 
             {         
-                GetProductsFromID(sellerID).map(product => <ProductThumbnail key={product} product = {product} />)
+                GetProductsFromSellerID(sellerID).map(product => <ProductThumbnail key={product.product_name} product = {product} />)
             }
             <br></br>
             </div>
@@ -220,8 +218,10 @@ const GetPartnerFromID = async(partner_ID, thumbnailID) =>
         document.getElementById(thumbnailID).innerHTML = 
         `
             <p>${outPartner.seller_name}</p>
-            <button type="button" onClick = ${RemovePartner(partner_ID)}>Remove</button>
+            <button id = ${thumbnailID + "_button"} type="button">Remove</button>
         `
+
+        document.getElementById(thumbnailID + "_button").addEventListener('click', () => RemovePartner(partner_ID))
     }
 }
 
