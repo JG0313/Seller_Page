@@ -83,7 +83,7 @@ const BaseEditOverview = () => {
         <br></br>
 
         <br></br>
-        <button type = "submit" onClick = { handleOnSubmit } > submit </button> 
+        <button type = "submit" onClick = { handleOnSubmit } > Save Changes </button> 
     </div>
     );
 };
@@ -99,7 +99,7 @@ function LoadDataToEditPage()
 {
     // Get Data From Database
     // dummy data rn
-    let data = GetUserFromID(1234);    
+    let data = GetUserFromID(1234);
 
     // Load User Name
     document.getElementById("seller_name").innerText = data.seller_name;
@@ -131,7 +131,6 @@ function GetProductFromID(product_ID)
 {
     // if key is not in database
     if(!(product_ID in dummyProductDictionary)) { return null; }
-    console.log(dummyProductDictionary[product_ID]);
     return dummyProductDictionary[product_ID];
 }
 
@@ -139,7 +138,6 @@ function GetPartnerFromID(partner_ID)
 {
     // if key is not in database
     if(!(partner_ID in dummyPartnerDictionary)) { return null; }
-    console.log(dummyPartnerDictionary[partner_ID]);
     return dummyPartnerDictionary[partner_ID];
 }
 
@@ -156,10 +154,11 @@ class ProductThumbnails extends Component
 {
     render() {
         return (
-            <div className="productThumbnailHolder"> 
+            <div className="thumbnailHolder"> 
             {         
                 this.props.products.map(product_ID => <ProductThumbnail product_ID = {product_ID} />)
             }
+            <br></br>
             </div>
         )
     }
@@ -171,9 +170,11 @@ class ProductThumbnail extends Component
     render() {
         let product = GetProductFromID(this.props.product_ID);
 
+        if(product == null) { return null; }
+
         return (
-            <div className="productThumbnail">
-                <h3>{product.product_name}</h3>
+            <div className="thumbnail">
+                <p>{product.product_name}</p>
                 <p>${product.product_price}</p>
                 <button onClick={this.handleClick}>Edit Product</button>
             </div>
@@ -185,7 +186,7 @@ class PartnerThumbnails extends Component
 {
     render() {
         return (
-            <div className="partnerThumbnailHolder"> 
+            <div className="thumbnailHolder"> 
             {         
                 this.props.partners.map(partner_ID => <PartnerThumbnail partner_ID = {partner_ID}/>)
             }
@@ -200,14 +201,11 @@ class PartnerThumbnail extends Component
     render() {
         let partner = GetPartnerFromID(this.props.partner_ID);
 
-        if(partner == null)
-        {
-            return null;
-        }
+        if(partner == null) { return null; }
 
         return (
-            <div className="partnerThumbnail">
-                <h3>{partner.partner_name}</h3>
+            <div className="thumbnail">
+                <p>{partner.partner_name}</p>
                 <button onClick={this.handleClick}>Remove Partner</button>
             </div>
         )
@@ -243,7 +241,7 @@ function EditProductPage(product_ID)
 
 const dummyProductDictionary =
 {
-    1001 : {product_name : "stuff", product_price : "20"},
+    1001 : {product_name : "stuffsssssssssssssssssssssss", product_price : "20"},
     1002 : {product_name : "stuff2", product_price : "50"},
     1003 : {product_name : "stuff3", product_price : "12"},
     1004 : {product_name : "stuff4", product_price : "3"}
@@ -270,7 +268,5 @@ const dummyUser =
 };
 
 //#endregion
-
-
 
 export default BaseEditOverview;

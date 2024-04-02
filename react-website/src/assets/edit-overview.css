@@ -4,7 +4,7 @@
     margin-left: 30%;
 }
 
-.editForm > form > input
+.editForm > input
 {
     width: 50%;
 }
@@ -20,22 +20,39 @@
     resize: vertical;
 }
 
-.productThumbnailHolder
+.thumbnailHolder
 {
-    background-color: bisque;
+    width: 100%;
 }
 
-.productThumbnail
+.thumbnail
 {
-    background-color: bisque;
+    position: relative;
+    box-sizing: border-box;
+    width: calc(50% - 8px);
+    height: fit-content;
+    margin: 4px;
+    border-radius: 5px;
+    background-color: #FFE699;
+    display: inline-block;
 }
 
-.partnerThumbnailHolder
+.thumbnail > p
 {
-    background-color: palegreen;
+    padding-left: 12px;
+    padding-right: 12px;
+    width: calc(100% - 24px);
+    text-overflow:ellipsis;
 }
 
-.partnerThumbnail
+.thumbnail > button
 {
-    background-color: palegreen;
+    position: absolute;
+    height: calc(25%);
+    min-height: 20px;
+
+    margin: 4px;
+    float: right;
+    right:  0px;
+    bottom: 0px;
 }
