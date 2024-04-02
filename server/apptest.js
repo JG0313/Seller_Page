@@ -76,11 +76,10 @@ app.get('/getUsers', (req, res) => {
 });
 
 //Get user by ObjectID
-app.get('/getUserByID/:id', (request, response) => {
-    Seller.findById(request.params.id)
-    .then(data => response.json(data))
-    .catch(error => response.json(error))
-    console.log(data)
+app.get('/getUserByID', (req, res) => {
+    Seller.findById(req.query.id)
+    .then(data => res.json(data))
+    .catch(error => res.json(error))
 });
 
  //Server starts listening 
