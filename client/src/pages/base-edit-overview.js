@@ -7,7 +7,6 @@ import e from "cors";
 
 var seller;
 var sellerID = "660b8c7240b171e3ad709c51";;
-var productRoot;
 var partnerRoot;
 
 const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
@@ -31,11 +30,7 @@ function BaseEditOverview()
             document.getElementById('seller_summary').value = res.data.seller_summary;
             document.getElementById('seller_name').innerText = res.data.seller_name;
 
-            if(productRoot == null)
-            {
-                productRoot = createRoot(document.getElementById('seller_products'));
-            }
-            productRoot.render(<ProductThumbnails /> )
+            GetProductsFromID();
 
             if(!Object.hasOwn(res.data, "seller_partners")) { Object.assign(res.data, {"seller_partners": []}) }
 
@@ -113,7 +108,7 @@ function BaseEditOverview()
 
             <label htmlFor="seller_products"><h2>Products:</h2></label>
 
-            <div id = "seller_products">
+            <div id = "seller_products" className="thumbnailHolder">
             </div>
 
             {/*<br></br>
@@ -144,37 +139,39 @@ function UpdateSellerDisplayPicture()
     image.src = window.URL.createObjectURL(input.files[0]);
 }
 
-function GetProductsFromSellerID(seller_ID)
-{
-    return dummyProducts;
-}
-
 //#region Visual Components
 
-class ProductThumbnails extends Component
+const GetProductsFromID = async() =>
 {
-    render() {
-        return (
-            <div className="thumbnailHolder"> 
-            {         
-                GetProductsFromSellerID(sellerID).map(product => <ProductThumbnail key={product.product_name} product = {product} />)
-            }
-            <br></br>
-            </div>
-        )
-    }
-}
+    let productThumbnails = document.getElementById("seller_products");
+    productThumbnails.innerHTML = `Loading...`;
 
-class ProductThumbnail extends Component
-{
-    render() {
-        return (
-            <div className="thumbnail">
-                <p>{this.props.product.product_name}</p>
-                <p>${this.props.product.product_price}</p>
-                <button type="button" onClick={this.handleClick}>Edit Product</button>
-            </div>
-        )
+    let outProduct = null;
+
+    // connect to database to get seller products from ID
+
+    /*
+    await axios.get("http://localhost:8080/getUserByID?id=" + product_ID)
+    .then(product => outProduct = product.data)
+    .catch(err => outProduct = null)
+    */
+
+    outProduct = dummyProducts;
+
+    if(outProduct !== null)
+    {
+        productThumbnails.innerHTML = ``;
+
+        outProduct.forEach(element => 
+        {
+            productThumbnails.innerHTML +=
+            `
+                <div class="thumbnail">
+                    <p>${element.product_name}</p>
+                    <p>${element.product_price}</p>
+                </div>
+            `
+        });
     }
 }
 
@@ -195,7 +192,7 @@ class PartnerThumbnails extends Component
 class PartnerThumbnail extends Component
 {
     render () {
-        let thumbnailID = "partnerThumnail_" + this.props.partner_ID + "_" + this.props.index;
+        let thumbnailID = "partnerThumnail_" + this.props.partner_ID;
         GetPartnerFromID(this.props.partner_ID, thumbnailID);
 
         return(
