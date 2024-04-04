@@ -68,8 +68,9 @@ function BaseEditOverview()
     {
         let partnerID = document.getElementById('partner_name').value;
 
-        if(seller.seller_partners.includes(partnerID)) { return; }
+        if(seller.seller_partners.includes(partnerID) || partnerID == sellerID) { return; }
 
+        document.getElementById('partner_name').value = "";
         seller.seller_partners.push(partnerID);
         partnerRoot.render(<PartnerThumbnails partners={seller.seller_partners} /> );
     }
@@ -210,9 +211,11 @@ const GetPartnerFromID = async(partner_ID, thumbnailID) =>
     .then(partner => outPartner = partner.data)
     .catch(err => outPartner = null)
 
+    let thumbnail = document.getElementById(thumbnailID);
+
     if(outPartner !== null)
     {
-        document.getElementById(thumbnailID).innerHTML = 
+        thumbnail.innerHTML = 
         `
             <p>${outPartner.seller_name}</p>
             <button id = ${thumbnailID + "_button"} type="button">Remove</button>
@@ -229,6 +232,8 @@ function RemovePartner(partner_ID)
     if (index > -1) { // only splice array when item is found
         seller.seller_partners.splice(index, 1); // 2nd parameter means remove one item only
     }
+
+    partnerRoot.render(<PartnerThumbnails partners={seller.seller_partners} /> );
 }
 
 const dummyProducts =
