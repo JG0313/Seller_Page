@@ -8,6 +8,7 @@ import e from "cors";
 var seller;
 var sellerID = "660b8c7240b171e3ad709c51";;
 var partnerRoot;
+var failToLoad = false;
 
 const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
@@ -22,6 +23,7 @@ function BaseEditOverview()
         const res = await axios.get("http://localhost:8080/getUserByID?id=" + sellerID);
         if(res.data === null || res.data.name == "CastError")
         {
+            failToLoad = true;
             return;
         }
         else
@@ -73,6 +75,16 @@ function BaseEditOverview()
         
         seller.seller_partners.push(partnerID);
         partnerRoot.render(<PartnerThumbnails partners={seller.seller_partners} /> );
+    }
+
+    if(failToLoad) {
+        return (
+            <div>
+                <h1>
+                    Failed To Retrieve User Data
+                </h1>
+            </div>
+        )
     }
 
     return ( 
