@@ -20,7 +20,7 @@ function BaseEditOverview()
     const handleDataLoad = async() =>
     {
         const res = await axios.get("http://localhost:8080/getUserByID?id=" + sellerID);
-        if(res.data.name == "CastError")
+        if(res.data === null || res.data.name == "CastError")
         {
             return;
         }
