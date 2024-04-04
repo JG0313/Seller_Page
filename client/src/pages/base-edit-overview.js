@@ -67,10 +67,10 @@ function BaseEditOverview()
     function AddPartner()
     {
         let partnerID = document.getElementById('partner_name').value;
+        document.getElementById('partner_name').value = "";
 
         if(seller.seller_partners.includes(partnerID) || partnerID == sellerID) { return; }
-
-        document.getElementById('partner_name').value = "";
+        
         seller.seller_partners.push(partnerID);
         partnerRoot.render(<PartnerThumbnails partners={seller.seller_partners} /> );
     }
