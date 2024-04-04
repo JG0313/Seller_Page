@@ -10,7 +10,7 @@
     transition: .5s;
    }
    .navbar.bg{
-    background: #fff;
+    background: #ffc500;
    }
    .links-container{
     display: flex;
@@ -21,8 +21,8 @@
     margin: 10px;
    }
    .link{
-    font-size: 20px;
-    color: #fff;
+    font-size: 22px;
+    color: #ffc500;
     text-decoration: none;
     padding: 10px;
     opacity: 0.7;
