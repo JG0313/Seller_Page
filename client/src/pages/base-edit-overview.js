@@ -6,46 +6,57 @@ import axios from 'axios';
 import e from "cors";
 
 var seller;
-var sellerID = "660b8c7240b171e3ad709c51";;
-var partnerRoot;
+var sellerID;
 var failToLoad = false;
+var hasLoaded = false;
 
 const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
+// Renders the edit overview
 function BaseEditOverview()
 {
+    // Get Current Seller ID
+    sellerID = "660b8c7240b171e3ad709c51";
+
+    // Calls the handle data load function once the page loads
     useEffect(()=> {
         handleDataLoad();
     }, [])
 
+    // Handles the retieval and display of user data to the webpage
     const handleDataLoad = async() =>
     {
+        // Checks if the page has already been loaded
+        if(hasLoaded) {return;}
+        hasLoaded = true;
+
+        // Attempts to retrieve user data from the database
         const res = await axios.get("http://localhost:8080/getUserByID?id=" + sellerID);
+
+        // Returns and displays the failure message if there was an error with loading
         if(res.data === null || res.data.name == "CastError")
         {
             failToLoad = true;
             return;
         }
-        else
-        {
-            document.getElementById('seller_website').value = res.data.seller_website;
-            document.getElementById('seller_summary').value = res.data.seller_summary;
-            document.getElementById('seller_name').innerText = res.data.seller_name;
 
-            GetProductsFromID();
+        // Retrieves data and fills out fields with previous information
+        document.getElementById('seller_website').value = res.data.seller_website;
+        document.getElementById('seller_summary').value = res.data.seller_summary;
+        document.getElementById('seller_name').innerText = res.data.seller_name;
 
-            if(!Object.hasOwn(res.data, "seller_partners")) { Object.assign(res.data, {"seller_partners": []}) }
+        // Retrieves data about the seller's products and displays them to the page
+        GetProductsFromID();
 
-            if(partnerRoot == null)
-            {
-                partnerRoot = createRoot(document.getElementById('seller_partners'));
-            }
-            partnerRoot.render(<PartnerThumbnails partners={res.data.seller_partners} /> );
+        // Retrieves data about the seller's partners and displays them to the page
+        res.data.seller_partners.forEach(partner_ID => { GetPartnerFromID(partner_ID); });
 
-            seller = res.data;
-        }
+        // Sets the seller variable to the retrieved data
+        seller = res.data;
     }
 
+    // Code to handle the submission of updated information
+    // Called when the "save changes button is pressed"
     const handleOnSubmit = async(e) => {
         e.preventDefault();
         console.log(JSON.stringify(seller));
@@ -57,26 +68,9 @@ function BaseEditOverview()
                     'Content-Type': 'application/json'
                 }
             })
-        result = await result;
-        console.warn(result);
-        if (result) {
-            alert("Data saved succesfully");
-        }
-
-        window.location.reload();
     }
 
-    function AddPartner()
-    {
-        let partnerID = document.getElementById('partner_name').value;
-        document.getElementById('partner_name').value = "";
-
-        if(seller.seller_partners.includes(partnerID) || partnerID == sellerID) { return; }
-        
-        seller.seller_partners.push(partnerID);
-        partnerRoot.render(<PartnerThumbnails partners={seller.seller_partners} /> );
-    }
-
+    // Error message that gets displayed when a loading failure occurs
     if(failToLoad) {
         return (
             <div>
@@ -87,6 +81,7 @@ function BaseEditOverview()
         )
     }
 
+    // Returns the editing form
     return ( 
     <div className="editForm">
         <form action="">
@@ -113,24 +108,20 @@ function BaseEditOverview()
             <label htmlFor="seller_summary">Summary:</label>
             <br></br>
             <textarea id="seller_summary" type="text" name="seller_summary" 
-            onChange={(e) => seller.seller_summary = e.target.value} 
+            onChange={(e) => seller.seller_summary = e.target.value}
             ></textarea>
             <br></br>
-
-            {/* Will update after talking to other team */}
 
             <label htmlFor="seller_products"><h2>Products:</h2></label>
 
             <div id = "seller_products" className="thumbnailHolder">
             </div>
 
-            {/*<br></br>
-            <button type="button" onClick = { AddProduct } > Add Product </button>
-            <br></br>*/}
-
             <label htmlFor="seller_partners"><h2>Partners:</h2></label>
 
             <div id = "seller_partners">
+                <div id="thumbnailHolder" className="thumbnailHolder"> 
+                </div>
             </div>
 
             <br></br>
@@ -145,6 +136,7 @@ function BaseEditOverview()
     );
 };
 
+// Updates the profile picture preview when a new image is chosen
 function UpdateSellerDisplayPicture()
 {
     let image = document.getElementById("seller_picture_display");
@@ -152,11 +144,12 @@ function UpdateSellerDisplayPicture()
     image.src = window.URL.createObjectURL(input.files[0]);
 }
 
-//#region Visual Components
-
+// Retrieves product data based on the seller's ID
 const GetProductsFromID = async() =>
 {
+    // Finds the holder object for products
     let productThumbnails = document.getElementById("seller_products");
+    // Adds temporary loading text
     productThumbnails.innerHTML = `Loading...`;
 
     let outProduct = null;
@@ -171,10 +164,12 @@ const GetProductsFromID = async() =>
 
     outProduct = dummyProducts;
 
+    // If the retrieval was successful
     if(outProduct !== null)
     {
         productThumbnails.innerHTML = ``;
 
+        // Iterate through each product in the list and display its information
         outProduct.forEach(element => 
         {
             productThumbnails.innerHTML +=
@@ -188,64 +183,81 @@ const GetProductsFromID = async() =>
     }
 }
 
-class PartnerThumbnails extends Component
+// Retrieves partner data based on the IDs saved in the seller's information
+const GetPartnerFromID = async(partner_ID) =>
 {
-    render() {
-        if(this.props.partners === null) {return;}
-        return (
-            <div className="thumbnailHolder"> 
-            {         
-                this.props.partners.map(partner_ID => <PartnerThumbnail key={partner_ID} partner_ID = {partner_ID}/>)
-            }
-            </div>
-        )
+    // Return if the seller id is the same as the seller then remove from list and return
+    if(partner_ID == sellerID) 
+    {
+        RemovePartner(partner_ID);
+        return;
     }
-}
 
-class PartnerThumbnail extends Component
-{
-    render () {
-        let thumbnailID = "partnerThumnail_" + this.props.partner_ID;
-        GetPartnerFromID(this.props.partner_ID, thumbnailID);
-
-        return(
-            <div id = {thumbnailID} className="thumbnail">
-                <p>Loading...</p>
-            </div>
-        )
-    }
-}
-
-const GetPartnerFromID = async(partner_ID, thumbnailID) =>
-{
+    // Retrieves information from the data base
     let outPartner = null;
     await axios.get("http://localhost:8080/getUserByID?id=" + partner_ID)
     .then(partner => outPartner = partner.data)
     .catch(err => outPartner = null)
 
-    let thumbnail = document.getElementById(thumbnailID);
-
-    if(outPartner !== null)
+    // If the ID is invalid then remove the ID from the list and return
+    if(outPartner === null || outPartner.name === "CastError")
     {
-        thumbnail.innerHTML = 
-        `
-            <p>${outPartner.seller_name}</p>
-            <button id = ${thumbnailID + "_button"} type="button">Remove</button>
-        `
-
-        document.getElementById(thumbnailID + "_button").addEventListener('click', () => RemovePartner(partner_ID))
+        RemovePartner(partner_ID);
+        return;
     }
+
+    // If the entered ID is not saved in the seller's infomation then add it to the list in the seller's information
+    if(!seller.seller_partners.includes(partner_ID) && partner_ID !== sellerID)
+    {
+        seller.seller_partners.push(partner_ID);
+    }
+
+    // Assembling the display for the seller thumbnail 
+    let thumbnail = document.getElementById("thumbnailHolder");
+
+    let newThumbnail = document.createElement("div");
+    newThumbnail.id = partner_ID + "_Thumbnail";
+    newThumbnail.className = "thumbnail";
+    newThumbnail.innerHTML = `<p>${outPartner.seller_name}</p>`
+
+    let newButton = document.createElement("button")
+    newButton.type = "button";
+    newButton.innerHTML = `Remove`
+    newButton.addEventListener('click', () => RemovePartner(partner_ID))
+
+    newThumbnail.appendChild(newButton);
+    thumbnail.appendChild(newThumbnail);
 }
 
+// Adds the partner based on the value in the text field
+function AddPartner()
+{
+    let partnerID = document.getElementById('partner_name').value;
+    document.getElementById('partner_name').value = "";
+
+    // return if the ID is the same as the seller's or the id is already present in the list
+    if(seller.seller_partners.includes(partnerID) || partnerID == sellerID) { return; }
+    
+    GetPartnerFromID(partnerID);
+}
+
+// Remove a partner from the list
 function RemovePartner(partner_ID)
 {
+    // removes the partner from the list
     const index = seller.seller_partners.indexOf(partner_ID);
 
-    if (index > -1) { // only splice array when item is found
-        seller.seller_partners.splice(index, 1); // 2nd parameter means remove one item only
+    if (index > -1) {
+        seller.seller_partners.splice(index, 1);
     }
 
-    partnerRoot.render(<PartnerThumbnails partners={seller.seller_partners} /> );
+    // removes the thumbnail if it exists on the page
+    let thumbnail = document.getElementById(partner_ID + "_Thumbnail");
+
+    if(thumbnail !== null)
+    {
+        thumbnail.remove();
+    }
 }
 
 const dummyProducts =
