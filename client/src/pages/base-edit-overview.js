@@ -170,17 +170,32 @@ const GetProductsFromID = async() =>
         productThumbnails.innerHTML = ``;
 
         // Iterate through each product in the list and display its information
-        outProduct.forEach(element => 
+        outProduct.forEach(product => 
         {
-            productThumbnails.innerHTML +=
+            let newThumbnail = document.createElement("div");
+            newThumbnail.id = product.product_ID + "_Thumbnail";
+            newThumbnail.className = "thumbnail";
+            newThumbnail.innerHTML = 
             `
-                <div class="thumbnail">
-                    <p>${element.product_name}</p>
-                    <p>${element.product_price}</p>
-                </div>
+                <p>${product.product_name}</p>
+                <p>${product.product_price}</p>
             `
+        
+            let newButton = document.createElement("button")
+            newButton.type = "button";
+            newButton.innerHTML = `Edit`
+            newButton.addEventListener('click', () => OpenProductEditPage(product.product_ID))
+        
+            newThumbnail.appendChild(newButton);
+            productThumbnails.appendChild(newThumbnail);
         });
     }
+}
+
+// Links to the edit page for the product
+function OpenProductEditPage(product_ID)
+{
+    // TODO
 }
 
 // Retrieves partner data based on the IDs saved in the seller's information
@@ -262,10 +277,10 @@ function RemovePartner(partner_ID)
 
 const dummyProducts =
 [
-    {product_name : "stuffsssssssssssssssssssssss", product_price : "20"},
-    {product_name : "stuff2", product_price : "50"},
-    {product_name : "stuff3", product_price : "12"},
-    {product_name : "stuff4", product_price : "3"}
+    {product_ID: 1234, product_name : "stuffsssssssssssssssssssssss", product_price : "20"},
+    {product_ID: 213,product_name : "stuff2", product_price : "50"},
+    {product_ID: 123123,product_name : "stuff3", product_price : "12"},
+    {product_ID: 12312312, product_name : "stuff4", product_price : "3"}
 ]
 
 export default BaseEditOverview;

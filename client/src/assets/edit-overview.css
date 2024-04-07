@@ -42,7 +42,7 @@
 .thumbnail > p
 {
     padding-right: 12px;
-    width: calc(100% - 24px);
+    width: 70%;
     text-overflow:ellipsis;
 }
 
@@ -56,4 +56,5 @@
     float: right;
     right:  0px;
     bottom: 0px;
+    width: 20%;
 }
