@@ -1,46 +1,58 @@
 /* image section */
-.image-mid-section{
-    width: 100%;
-    height: 600px;
-    padding: 50px 5vw;
-   }
-   .image-collage{
-    width: 100%;
-    height: 100%;
-    background: url(./img/bg-1.png);
-    background-size: cover;
-   }
-   .image-collection{
+.image-mid-section {
     position: relative;
+    width: 100%;
+  }
+  
+  .image-collection {
+    text-align: center;
+  }
+  
+  .image-item {
+    display: inline-block;
+    position: relative; /* Ensure proper positioning of overlay */
+    margin: 50px;
+  }
+  
+  .overlay {
+    position: relative;
+    bottom: -100%; /* Initially, place overlay below the image */
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+    color: white;
+    text-align: center;
+    padding: 20px;
+    transition: bottom 0.3s ease; /* Transition for smooth slide-in effect */
+  }
+  
+  .image-item:hover .overlay {
+    bottom: 0; /* Slide the overlay in when image is hovered */
+  }
+  
+  .overlay img {
     display: block;
-    width: 50%;
-    height: 100%;
-    background: #fff;
-    margin: auto;
-   }
-   .collage-img{
-    position: absolute;
+    width: 300px;
+    height: 300px;
     object-fit: cover;
-    transition: .5s;
-   }
-   .collage-img:nth-child(1){
-    width: 350px;
-    height: 350px;
-    top: 20px;
-    left: 40px;
-   }
-   .collage-img:nth-child(2){
-    width: 250px;
-    height: 250px;
-    top: 200px;
-    left: 200px;
-   }
-   .collage-img:nth-child(3){
-    width: 250px;
-    height: 250px;
-    top: 100px;
-    left: 350px;
-   }
-   .collage-img:hover{
-    transform: translateY(-10px);
-   }
+    transition: opacity 0.3s ease; /* Optional: add a transition for image opacity */
+  }
+  
+  .image-item:hover .overlay img {
+    opacity: 0.7; /* Reduce image opacity when overlay is active */
+  }
+  
+  .learn-more-text {
+    position: absolute;
+    bottom: 10%;
+    left: 0%;
+    right: 0%;
+    color: white;
+    text-align: center;
+    padding: 5px;
+  }
+  
+
+  
+  
+  
