@@ -119,7 +119,7 @@ function App() {
                 <Route path="/midSection" element={<MidSection />} />
                 <Route path="/imageMidSection" element={<ImageMidSection />} />
                 <Route path="/reviewSection" element={<ReviewSection />} />
-                <Route path="/edit-overview" element={<EditPage />} />
+                <Route path="/edit-overview" element={<SellerPageFramework component={<EditPage />} />} />
             </Routes>
         </div>        
             <Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>

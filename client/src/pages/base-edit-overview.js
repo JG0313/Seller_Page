@@ -10,6 +10,9 @@ var sellerID;
 var failToLoad = false;
 var hasLoaded = false;
 
+var getUser = "http://localhost:8080/getUserByID?id=";
+var updateUser = "http://localhost:8080/update?id=";
+
 const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
 // Renders the edit overview
@@ -17,6 +20,7 @@ function BaseEditOverview()
 {
     // Get Current Seller ID
     sellerID = "660b8c7240b171e3ad709c51";
+    hasLoaded = false;
 
     // Calls the handle data load function once the page loads
     useEffect(()=> {
@@ -26,12 +30,14 @@ function BaseEditOverview()
     // Handles the retieval and display of user data to the webpage
     const handleDataLoad = async() =>
     {
-        // Checks if the page has already been loaded
+        console.log("start");
         if(hasLoaded) {return;}
+        console.log("next");
+
         hasLoaded = true;
 
         // Attempts to retrieve user data from the database
-        const res = await axios.get("http://localhost:8080/getUserByID?id=" + sellerID);
+        const res = await axios.get(getUser + sellerID)
 
         // Returns and displays the failure message if there was an error with loading
         if(res.data === null || res.data.name == "CastError")
@@ -60,14 +66,16 @@ function BaseEditOverview()
     const handleOnSubmit = async(e) => {
         e.preventDefault();
         console.log(JSON.stringify(seller));
-        let result = await fetch(
-            'http://localhost:8080/update?id=' + sellerID, {
+        await fetch(
+            updateUser + sellerID, 
+            {
                 method: "post",
                 body: JSON.stringify(seller),
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })
+            }
+        )
     }
 
     // Error message that gets displayed when a loading failure occurs
@@ -210,7 +218,7 @@ const GetPartnerFromID = async(partner_ID) =>
 
     // Retrieves information from the data base
     let outPartner = null;
-    await axios.get("http://localhost:8080/getUserByID?id=" + partner_ID)
+    await axios.get(getUser + partner_ID)
     .then(partner => outPartner = partner.data)
     .catch(err => outPartner = null)
 
