@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 mongoose.connect("mongodb://127.0.0.1/Test", {//connect and create Test db
     dbName: 'CatData',
