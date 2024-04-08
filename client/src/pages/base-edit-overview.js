@@ -30,10 +30,8 @@ function BaseEditOverview()
     // Handles the retieval and display of user data to the webpage
     const handleDataLoad = async() =>
     {
-        console.log("start");
+        // Checks if the page has already been loaded
         if(hasLoaded) {return;}
-        console.log("next");
-
         hasLoaded = true;
 
         // Attempts to retrieve user data from the database
