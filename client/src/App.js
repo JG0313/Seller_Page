@@ -121,8 +121,9 @@ function App() {
                 <Route path="/reviewSection" element={<ReviewSection />} />
                 <Route path="/edit-overview" element={<EditPage />} />
             </Routes>
-        </div>
-            <Link to="/edit-overview" className="btn btn-primary">hello</Link>
+        </div>        
+            <Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>
+            {/*
             <div className="w-100 vh-100 d-flex justify-content-center align-items-center">
                 <div className="w-50">
                     <table className="table">
@@ -145,6 +146,7 @@ function App() {
                     </table>
                 </div>
             </div>
+            */}
         </Router>
     );
 }
