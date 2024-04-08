@@ -1,7 +1,7 @@
 import React from 'react';
 import '../assets/ImageMidSection.css'; 
 
-function ImageMidSection() {
+const ImageMidSection = () => {
   return (
     <section className="image-mid-section">
       <div className="image-collage">

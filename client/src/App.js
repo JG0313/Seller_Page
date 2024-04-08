@@ -4,7 +4,6 @@ import './assets/App.css';
 import Navbar from './components/Navbar';
 import Header from './pages/Header';
 import ProductSection from './pages/ProductSection';
-import MidSection from './pages/MidSection';
 import ImageMidSection from './pages/ImageMidSection';
 import ReviewSection from './pages/ReviewSection';
 import EditPage from './pages/base-edit-overview.js';
@@ -30,49 +29,51 @@ function App() {
 
     return (
         <Router>
-            <div className="app-container">
-                <Navbar />
-                <Header />
-                <div className="content-container">
-                    <ProductSection />
+        <div className="app-container">
+            <Navbar />
+            <Header />
+            <div className="content-container">
+                <ProductSection />
                     <div className="content-container">
-                        <MidSection />                       
-                        <div className="main-content">
-                            <Routes>
+                        <ImageMidSection />
+                        <div className="content-container">
+                            <ReviewSection />                
+                            <div className="main-content">
+                                <Routes>
                                 <Route path="/productSection" element={<ProductSection />} />
-                                <Route path="/midSection" element={<MidSection />} />
                                 <Route path="/imageMidSection" element={<ImageMidSection />} />
                                 <Route path="/reviewSection" element={<ReviewSection />} />
                                 <Route path="/edit-overview" element={<EditPage />} />
                             </Routes>
-                        </div>
+                        </div>  
                     </div>
                 </div>
             </div>
-            <Link to="/edit-overview" className="btn btn-primary">hello</Link>
-            <div className="w-100 vh-100 d-flex justify-content-center align-items-center">
-                <div className="w-50">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone Number</th>
+        </div>
+        <Link to="/edit-overview" className="btn btn-primary">hello</Link>
+        <div className="w-100 vh-100 d-flex justify-content-center align-items-center">
+            <div className="w-50">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {sellers.map(seller => (
+                            <tr key={seller.id}>
+                                <td>{seller.seller_name}</td>
+                                <td>{seller.seller_email}</td>
+                                <td>{seller.seller_phoneNumber}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {sellers.map(seller => (
-                                <tr key={seller.id}>
-                                    <td>{seller.seller_name}</td>
-                                    <td>{seller.seller_email}</td>
-                                    <td>{seller.seller_phoneNumber}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                        ))}
+                    </tbody>
+                </table>
             </div>
-        </Router>
+        </div>
+    </Router>
     );
 }
 

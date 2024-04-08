@@ -1,7 +1,7 @@
 import React from 'react';
 import '../assets/ReviewSection.css'; 
 
-function ReviewSection() {
+const ReviewSection = () => {
   return (
     <section className="review-section">
       <h1 className="section-title">what our <span>customers</span> says about us</h1>

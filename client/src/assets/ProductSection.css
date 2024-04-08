@@ -13,12 +13,12 @@
     justify-content: space-between;
    }
    .product-card{
-    border: 15px solid #d5be8b;
+    border: 15px solid #ffc500;
     width: 300px;
     height: 300px;
     overflow: hidden;
     position: relative;
-    background: #d5be8b;
+    background: #ffc500;
    }
    .product-card:nth-child(even){
     border-color: #190c05;
