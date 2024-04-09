@@ -9,6 +9,7 @@ import EditPage from '../pages/base-edit-overview.js';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function SellerOverview() {
+
     return (
         <div className="app-container">
             <Navbar />
