@@ -1,85 +1,155 @@
-// Navbar.js
-import React, { useState, useEffect } from 'react';
-import '../assets/Navbar.css'; 
-import Cart from '../assets/img/cart.jpg';
-import User from '../assets/img/user.jpg';
+/// <summary>
+/// Authors: Jason Shull, Parker Libby
+/// Description: This script handles all of the links that the files need to navigate to for the navbar
+/// </summary>
 
-function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [cartItemCount, setCartItemCount] = useState(0); // State to track cart item count
+import React from "react";
+import { Nav, NavLink, NavMenu, SmallNavMenu, SmallNavLink, SearchContainer, SearchInput, SearchButton } from "./NavbarElements";
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY >= 180) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
 
-    window.addEventListener('scroll', handleScroll);
+export const DefaultNavBar = () => {
+    return (
+        <Nav>
+            <NavMenu>
+                <NavLink to="/" activeStyle>
+                    <img src={require("../assets/House.png")} alt="House"></img>
+                </NavLink>
+                <NavLink to="/houses" activeStyle>
+                    Houses
+                </NavLink>
+                <NavLink to="/structures" activeStyle>
+                    Structures
+                </NavLink>
+                <NavLink to="/brands" activeStyle>
+                    Brands
+                </NavLink>
+                <NavLink to="/resources" activeStyle>
+                    Resources
+                </NavLink>
+                <NavLink to="/company" activeStyle>
+                    Company
+                </NavLink>
+            </NavMenu>
+            <SearchContainer>
+                <SearchInput type="text" placeholder="Search..." />
+                <SearchButton><img src={require("../assets/SearchIcon.png")} alt="Search" width="30" height="30" /></SearchButton>
+            </SearchContainer>
+        </Nav>
+    );
+};
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+export const BuyerNavBar = () => {
+    return (
+        <Nav>
+            <NavMenu>
+                <NavLink to="/login/buyer" activeStyle>
+                    <img src={require("../assets/House.png")} alt="House"></img>
+                </NavLink>
+                <NavLink to="/houses" activeStyle>
+                    Houses
+                </NavLink>
+                <NavLink to="/structures" activeStyle>
+                    Structures
+                </NavLink>
+                <NavLink to="/brands" activeStyle>
+                    Brands
+                </NavLink>
+                <NavLink to="/resources" activeStyle>
+                    Resources
+                </NavLink>
+                <NavLink to="/company" activeStyle>
+                    Company
+                </NavLink>
+            </NavMenu>
+            <SearchContainer>
+                <SearchInput type="text" placeholder="Search..." />
+                <SearchButton><img src={require("../assets/SearchIcon.png")} alt="Search" width="30" height="30" /></SearchButton>
+            </SearchContainer>
+        </Nav>
+    );
+};
 
-  // Handler for clicking on cart
-  const handleCartClick = () => {
-    // Implement logic to handle cart click, such as opening a cart modal
-    console.log('Cart clicked');
-  };
+export const SellerNavBar = () => {
+    return (
+        <Nav>
+            <NavMenu>
+                <NavLink to="/login/seller" activeStyle>
+                    <img src={require("../assets/House.png")} alt="House"></img>
+                </NavLink>
+                <NavLink to="/discover" activeStyle>
+                    Discover
+                </NavLink>
+                <NavLink to="/design" activeStyle>
+                    Design
+                </NavLink>
+                <NavLink to="/construct" activeStyle>
+                    Construct
+                </NavLink>
+                <NavLink to="/community" activeStyle>
+                    Community
+                </NavLink>
+                <NavLink to="/support" activeStyle>
+                    Support
+                </NavLink>
+            </NavMenu>
+            <SearchContainer>
+                <SearchInput type="text" placeholder="Search..." />
+                <SearchButton><img src={require("../assets/SearchIcon.png")} alt="Search" width="30" height="30" /></SearchButton>
+            </SearchContainer>
+        </Nav>
+    );
+};
 
-  // Handler for clicking on user icon
-  const handleUserClick = () => {
-    // Implement logic to handle user click, such as opening a user profile menu
-    console.log('User clicked');
-  };
+export const SmallerDefaultNavBar = () => {
+    return (
+        <smallNav>
+            <SmallNavMenu>
+                <SmallNavLink to="/login" activeStyle>
+                    Login
+                </SmallNavLink>
+                <SmallNavLink to="/location-editor" activeStyle>
+                    Location Editor
+                </SmallNavLink>
+                <SmallNavLink to="/message-inbox" activeStyle>
+                    Message Inbox
+                </SmallNavLink>
+            </SmallNavMenu>
+        </smallNav>
+    );
+};
 
-  // Function to handle clicking on overview
-  const handleOverviewClick = () => {
-    // Implement logic to handle clicking on overview
-    console.log('Overview clicked');
-  };
+export const SmallerSellerNavBar = () => {
+    return (
+        <smallNav>
+            <SmallNavMenu>
+                <SmallNavLink to="/dummyPages/myaccount" activeStyle>
+                    My Account
+                </SmallNavLink>
+                <SmallNavLink to="/dummyPages/locationeditor" activeStyle>
+                    Location Editor
+                </SmallNavLink>
+                <SmallNavLink to="/dummyPages/messagesinbox" activeStyle>
+                    Message Inbox
+                </SmallNavLink>
+            </SmallNavMenu>
+        </smallNav>
+    );
+};
 
-  // Function to handle clicking on products
-  const handleProductsClick = () => {
-    // Implement logic to handle clicking on products
-    console.log('Products clicked');
-  };
-
-  // Function to handle clicking on partners
-  const handlePartnersClick = () => {
-    // Implement logic to handle clicking on partners
-    console.log('Partners clicked');
-  };
-
-  // Function to handle clicking on articles
-  const handleArticlesClick = () => {
-    // Implement logic to handle clicking on articles
-    console.log('Articles clicked');
-  };
-
-  return (
-    <nav className={`navbar ${isScrolled ? 'bg' : ''}`}>
-      <ul className="links-container">
-        <li className="link-item"><a href="#overview" className="link active" onClick={handleOverviewClick}>Overview</a></li>
-        <li className="link-item"><a href="#products" className="link" onClick={handleProductsClick}>Products</a></li>
-        <li className="link-item"><a href="#partners" className="link" onClick={handlePartnersClick}>Partners</a></li>
-        <li className="link-item"><a href="#articles" className="link" onClick={handleArticlesClick}>Articles</a></li>
-      </ul>
-      <div className="user-interactions">
-        <div className="cart" onClick={handleCartClick}>
-          <img src={Cart} className="cart-icon" alt="Cart" />
-          <span className="cart-item-count">{cartItemCount}</span>
-        </div>
-        <div className="user" onClick={handleUserClick}>
-          <img src={User} className="user-icon" alt="User" />
-        </div>
-      </div>
-    </nav>
-  );
-}
-
-export default Navbar;
-
+export const SmallerBuyerNavBar = () => {
+    return (
+        <smallNav>
+            <SmallNavMenu>
+                <SmallNavLink to="/dummyPages/myaccount" activeStyle>
+                    My Account
+                </SmallNavLink>
+                <SmallNavLink to="/dummyPages/myfavorites" activeStyle>
+                    My Favorites
+                </SmallNavLink>
+                <SmallNavLink to="/mycart" activeStyle>
+                    <img src={require("../assets/Cart.png")} alt="Cart" height="30"></img>
+                </SmallNavLink>
+            </SmallNavMenu>
+        </smallNav>
+    );
+};
