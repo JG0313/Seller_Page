@@ -29,12 +29,8 @@ import MyCart from "./pages/myCart";
 import Login from "./pages/login";
 import SampleProduct from "./pages/dummyPages/sampleProduct";
 
-import Header from './pages/Header';
-import ProductSection from './pages/ProductSection';
-import MidSection from './pages/MidSection';
-import ImageMidSection from './pages/ImageMidSection';
-import ReviewSection from './pages/ReviewSection';
 import EditPage from './pages/base-edit-overview.js';
+import SellerPage from './pages/SellerOverview.js';
 
 function App() {
     const [sellers, setSellers] = useState([]);
@@ -115,14 +111,12 @@ function App() {
                     path="/dummyPages/sampleProduct" //Path for it to be added too
                     element={<DefaultPageFramework component={<SampleProduct />} />} />
 
-                <Route path="/productSection" element={<ProductSection />} />
-                <Route path="/midSection" element={<MidSection />} />
-                <Route path="/imageMidSection" element={<ImageMidSection />} />
-                <Route path="/reviewSection" element={<ReviewSection />} />
                 <Route path="/edit-overview" element={<SellerPageFramework component={<EditPage />} />} />
+                <Route path="/sellerPage" element={<SellerPageFramework component={<SellerPage />} />} />
             </Routes>
         </div>        
             <Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>
+            <Link to="/sellerPage" className="btn btn-primary"><button>Seller Page</button></Link>
             {/*
             <div className="w-100 vh-100 d-flex justify-content-center align-items-center">
                 <div className="w-50">

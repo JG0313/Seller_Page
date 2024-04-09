@@ -1,5 +1,9 @@
 import React from 'react';
 import '../assets/ProductSection.css'; 
+import Product1 from '../assets/img/test1.jpg';
+import Product2 from '../assets/img/test2.jpg';
+import Product3 from '../assets/img/test3.jpg';
+import Product4 from '../assets/img/test4.jpg';
 
 function ProductSection() {
   return (
@@ -7,13 +11,22 @@ function ProductSection() {
       <h1 className="section-title">best selling products</h1>
       <div className="product-container">
         <div className="product-card">
-          <img src="assets/img/product-1.png" className="product-img" alt="" />
-          <p className="product-name">lights →</p>
+          <img src={Product1} className="product-img" alt="Product 1" />
         </div>
-        {/* Add 3 more Cards */}
+        <div className="product-card">
+          <img src={Product2} className="product-img" alt="Product 2" />
+        </div>
+        <div className="product-card">
+          <img src={Product3} className="product-img" alt="Product 3" />
+        </div>
+        <div className="product-card">
+          <img src={Product4} className="product-img" alt="Product 4" />
+        </div>
       </div>
     </section>
   );
+
 }
 
 export default ProductSection;
+
