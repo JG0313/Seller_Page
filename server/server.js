@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const port = process.env.PORT || 5000;
 
 mongoose.connect("mongodb://127.0.0.1/Test", {//connect and create Test db
     dbName: 'CatData',
@@ -29,7 +30,7 @@ Seller.createIndexes();
 
 const app = express(); //Create route to create a seller 
 const cors = require("cors");
-console.log("App listen at port 8080");
+console.log(`Server is running on port: ${port}`);
 
 // for backend and express
 app.use(express.json()); 
@@ -100,7 +101,7 @@ app.get('/getUserByID', (req, res) => {
 
  //Server starts listening 
  app.listen(8080, function() {
-    console.log("Server is listening at port 8080");
+     console.log(`Server is running on port: ${port}`);
 });
 
 app.post('/product', async (req, res) => {
