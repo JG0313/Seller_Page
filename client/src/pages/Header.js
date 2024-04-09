@@ -6,6 +6,7 @@ import Seller from '../assets/img/seller.jpg';
 import { createRoot } from 'react-dom/client';
 import axios from 'axios';
 import e from "cors";
+import { Link } from "react-router-dom";
 
 var seller;
 var sellerID;
@@ -19,7 +20,7 @@ const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Defaul
 
 function Header() {
           // Get Current Seller ID
-          sellerID = "660af60ec30674a9825f7109";
+          sellerID = "660b8c7240b171e3ad709c51";
           hasLoaded = false;
       
           // Calls the handle data load function once the page loads
@@ -47,7 +48,7 @@ function Header() {
               // Retrieves data and fills out fields with previous information
               document.getElementById('seller_website').innerText = res.data.seller_website;
               document.getElementById('seller_email').innerText = res.data.seller_email;
-              document.getElementById('seller_number').innerText = res.data.seller_number;
+              document.getElementById('seller_number').innerText = res.data.seller_phoneNumber;
               document.getElementById('seller_summary').innerText = res.data.seller_summary;
               document.getElementById('seller_name').innerText = res.data.seller_name;
           }
@@ -60,10 +61,11 @@ function Header() {
       <h1 id='seller_name' className="header-heading">
         <span>Mark <br /></span> Johnson
       </h1>
-      <p id='seller_website' className="header-text">www.markjohnson.org</p>
+      <a href='www.markjohnson.org' id='seller_website' className="header-text">www.markjohnson.org</a>
       <p id='seller_email' className="header-text">markjohnson@gmail.com</p>
       <p id='seller_number' className="header-text">555-555-5555</p>
       <p id='seller_summary' className="header-text">Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+      <Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>
       </div>
     </header>
   );

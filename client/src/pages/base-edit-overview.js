@@ -283,10 +283,8 @@ function RemovePartner(partner_ID)
 
 const dummyProducts =
 [
-    {product_ID: 1234, product_name : "stuffsssssssssssssssssssssss", product_price : "20"},
-    {product_ID: 213,product_name : "stuff2", product_price : "50"},
-    {product_ID: 123123,product_name : "stuff3", product_price : "12"},
-    {product_ID: 12312312, product_name : "stuff4", product_price : "3"}
+    {product_ID: 1234, product_name : "Modern House Plans", product_price : "$5000"},
+    {product_ID: 213,product_name : "Side Garage Plans", product_price : "$2000"},
 ]
 
 export default BaseEditOverview;

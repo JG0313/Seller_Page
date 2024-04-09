@@ -113,7 +113,7 @@ function App() {
                 <Route path="/sellerPage" element={<SellerPageFramework component={<SellerPage />} />} />
             </Routes>
         </div>        
-            <Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>
+            {/*<Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>*/}
             <Link to="/sellerPage" className="btn btn-primary"><button>Seller Page</button></Link>
             {/*
             <div className="w-100 vh-100 d-flex justify-content-center align-items-center">
