@@ -46,6 +46,8 @@ function Header() {
       
               // Retrieves data and fills out fields with previous information
               document.getElementById('seller_website').innerText = res.data.seller_website;
+              document.getElementById('seller_email').innerText = res.data.seller_email;
+              document.getElementById('seller_number').innerText = res.data.seller_number;
               document.getElementById('seller_summary').innerText = res.data.seller_summary;
               document.getElementById('seller_name').innerText = res.data.seller_name;
           }
