@@ -1,9 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import '../assets/edit-overview.css';
-import { useState , useEffect} from 'react';
-import { createRoot } from 'react-dom/client';
+import { useEffect} from 'react';
 import axios from 'axios';
-import e from "cors";
 
 var seller;
 var sellerID;
@@ -38,7 +36,7 @@ function BaseEditOverview()
         const res = await axios.get(getUser + sellerID)
 
         // Returns and displays the failure message if there was an error with loading
-        if(res.data === null || res.data.name == "CastError")
+        if(res.data === null || res.data.name === "CastError")
         {
             failToLoad = true;
             return;
@@ -208,7 +206,7 @@ function OpenProductEditPage(product_ID)
 const GetPartnerFromID = async(partner_ID) =>
 {
     // Return if the seller id is the same as the seller then remove from list and return
-    if(partner_ID == sellerID) 
+    if(partner_ID === sellerID) 
     {
         RemovePartner(partner_ID);
         return;
@@ -257,7 +255,7 @@ function AddPartner()
     document.getElementById('partner_name').value = "";
 
     // return if the ID is the same as the seller's or the id is already present in the list
-    if(seller.seller_partners.includes(partnerID) || partnerID == sellerID) { return; }
+    if(seller.seller_partners.includes(partnerID) || partnerID === sellerID) { return; }
     
     GetPartnerFromID(partnerID);
 }
