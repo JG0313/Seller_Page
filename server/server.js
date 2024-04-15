@@ -3,7 +3,19 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const port = process.env.PORT || 5000;
 
-mongoose.connect("mongodb://127.0.0.1/Test", {//connect and create Test db
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://abreuker:OjsV2DsRHLVxTEQh@cluster0.sjmd6on.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
+
+mongoose.connect(uri, {//connect and create Test db
     dbName: 'CatData',
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -19,8 +31,10 @@ const sellerSchema = new mongoose.Schema({
     seller_email: { type: String, required: true, unique: true },
     seller_phoneNumber: { type: String, required: true },
     seller_address: { type: String, required: false },
+    seller_zipcode: {type: String, required: true},
     seller_summary: { type: String, required: true },
     seller_partners: { type: Array, required: true},
+    seller_website_visability: {type: Boolean, required: false},
     userType: { type: String, default: "Seller" }
 }); 
 
@@ -49,8 +63,10 @@ app.post("/create", async(req, res) => {
     seller_email: req.body.seller_email,
     seller_phoneNumber: req.body.seller_phoneNumber,
     seller_address: req.body.seller_address,
+    seller_zipcode: req.body.seller_zipcode,
     seller_summary: req.body.seller_summary,
     seller_partners: req.body.seller_partners,
+    userType: req.body.userType,
     });
  
  // Adding record using save() method 
@@ -101,7 +117,7 @@ app.get('/getUserByID', (req, res) => {
 
  //Server starts listening 
  app.listen(8080, function() {
-     console.log(`Server is running on port: ${port}`);
+    console.log(`Server is running on port: ${port}`);
 });
 
 app.post('/product', async (req, res) => {
@@ -129,3 +145,4 @@ app.post('/product', async (req, res) => {
         });
     }
 });
+
