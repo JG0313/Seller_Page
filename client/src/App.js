@@ -29,7 +29,7 @@ import Login from "./pages/login";
 import SampleProduct from "./pages/dummyPages/sampleProduct";
 
 import EditPage from './pages/base-edit-overview.js';
-import SellerPage from './pages/SellerOverview.js';
+import NewSellerPage from './pages/NewSellerPage.js';
 
 function App() {
     const [sellers, setSellers] = useState([]);
@@ -110,7 +110,7 @@ function App() {
                     path="/dummyPages/sampleProduct" //Path for it to be added too
                     element={<DefaultPageFramework component={<SampleProduct />} />} />
                 <Route path="/edit-overview" element={<SellerPageFramework component={<EditPage />} />} />
-                <Route path="/sellerPage" element={<SellerPageFramework component={<SellerPage />} />} />
+                <Route path="/sellerPage" element={<SellerPageFramework component={<NewSellerPage />} />} />
             </Routes>
         </div>        
             {/*<Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>*/}
