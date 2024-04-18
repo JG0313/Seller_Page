@@ -1,5 +1,6 @@
 import React from 'react';
 import "../assets/NewSellerPage.css";
+import { Link } from "react-router-dom";
 
 function NewSellerPage({}){
 
@@ -7,7 +8,7 @@ function NewSellerPage({}){
         <div className="SellerPage">
             <div>
                <button>Dashboard</button>
-               <button>Profile Customization</button>
+               <button onClick={() => window.location.href='/edit-overview'}>Profile Customization</button>
                <button>Quotes Requests</button>
                <button>Messages</button>
                <button>Pans</button>

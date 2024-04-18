@@ -72,6 +72,8 @@ function BaseEditOverview()
                 }
             }
         )
+
+        window.location.href='/edit-overview';
     }
 
     // Error message that gets displayed when a loading failure occurs
