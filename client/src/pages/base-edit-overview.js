@@ -8,8 +8,8 @@ var sellerID;
 var failToLoad = false;
 var hasLoaded = false;
 
-var getUser = "http://localhost:8080/getUserByID?id=";
-var updateUser = "http://localhost:8080/update?id=";
+var getUser = "http://localhost:4000/getUserByID?id=";
+var updateUser = "http://localhost:4000/update?id=";
 
 const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
@@ -17,8 +17,10 @@ const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Defaul
 function BaseEditOverview()
 {
     // Get Current Seller ID
-    sellerID = "661d3c07eb63dcabfa779759";
+    let user = JSON.parse(localStorage.getItem("user"));
+    sellerID = user._id;
     hasLoaded = false;
+    const userData = JSON.parse(localStorage.user);
 
     // Calls the handle data load function once the page loads
     useEffect(()=> {
