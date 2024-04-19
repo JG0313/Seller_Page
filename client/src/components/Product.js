@@ -2,18 +2,16 @@ import React from "react";
 import "../assets/Product.css";
 import {Link} from 'react-router-dom'
 
-const Product = ({title, image, link, designer, price}) => {
+const Product = ({name, image, link}) => {
 //make this whole thing a button/link?
     return(
         <div className="header">
-            <Link to= {link}>
-                <img className="productPhoto" src={image} alt="" />
-            </Link>
-            <div className="productInfo" >
-                <strong>{title}</strong>
-                <section><small>Designed by: {designer}</small></section>
-                <section><small>Price: ${price}</small></section>
-            </div>
+        <Link to= {link}>
+            <img className="productPhoto" src={image} alt="" />
+        </Link>
+        <div className="productTitle">
+                <p>{name}</p>
+            </div> 
         </div>
     );
 }

@@ -118,6 +118,37 @@ export const SmallerDefaultNavBar = () => {
     );
 };
 
+export const DesignerNavBar = () => {
+    return (
+        <Nav>
+            <NavMenu>
+                <NavLink to="/login/designer" activeStyle>
+                    <img src={require("../assets/House.png")} alt="House"></img>
+                </NavLink>
+                <NavLink to="/discover" activeStyle>
+                    Discover
+                </NavLink>
+                <NavLink to="/design" activeStyle>
+                    Design
+                </NavLink>
+                <NavLink to="/construct" activeStyle>
+                    Construct
+                </NavLink>
+                <NavLink to="/community" activeStyle>
+                    Community
+                </NavLink>
+                <NavLink to="/support" activeStyle>
+                    Support
+                </NavLink>
+            </NavMenu>
+            <SearchContainer>
+                <SearchInput type="text" placeholder="Search..." />
+                <SearchButton><img src={require("../assets/SearchIcon.png")} alt="Search" width="30" height="30" /></SearchButton>
+            </SearchContainer>
+        </Nav>
+    );
+};
+
 export const SmallerSellerNavBar = () => {
     return (
         <smallNav>
@@ -146,7 +177,7 @@ export const SmallerBuyerNavBar = () => {
                 <SmallNavLink to="/dummyPages/myfavorites" activeStyle>
                     My Favorites
                 </SmallNavLink>
-                <SmallNavLink to="/mycart" activeStyle>
+                <SmallNavLink to="/dummyPages/mycart" activeStyle>
                     <img src={require("../assets/Cart.png")} alt="Cart" height="30"></img>
                 </SmallNavLink>
             </SmallNavMenu>

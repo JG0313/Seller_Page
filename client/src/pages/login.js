@@ -17,9 +17,6 @@ const Login = () => {
             <NavLink to="./seller" activeStyle>
                 seller
             </NavLink>
-            <NavLink to="./designer" activeStyle>
-                designer
-            </NavLink>
             <NavLink to="./buyer" activeStyle>
                 buyer
             </NavLink>

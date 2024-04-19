@@ -25,6 +25,7 @@ import Support from "./pages/support";
 import MyAccount from "./pages/dummyPages/myAccount";
 import MyFavorites from "./pages/dummyPages/myFavorites";
 import MyCart from "./pages/myCart";
+import { CreateAccountForm, CreateBuyerForm, CreateSellerForm, LoginForm, LoginScreenBase, Template } from './Login';
 import Login from "./pages/login";
 import SampleProduct from "./pages/dummyPages/sampleProduct";
 
@@ -67,6 +68,19 @@ function App() {
                 <Route
                     path="/login" //Path for it to be added too
                     element={<DefaultPageFramework component={<Login />} />} />
+
+````````````````<Route
+                    exact path="/login"
+                    element={<Template children={<LoginScreenBase children={<LoginForm />} />} />} />
+                <Route
+                    exact path="/SignUp"
+                    element={<Template children={<LoginScreenBase children={<CreateAccountForm />} />} />} />
+                <Route
+                    exact path="/SignUp/SellerSignUp"
+                    element={<Template children={<LoginScreenBase children={<CreateSellerForm />} />} />} />
+                <Route
+                    exact path="/SignUp/BuyerSignUp"
+                    element={<Template children={<LoginScreenBase children={<CreateBuyerForm />} />} />} />    
                 <Route
                     path="/houses" //Path for it to be added too
                     element={<BuyerPageFramework component={<Houses />} />} />
@@ -106,6 +120,26 @@ function App() {
                 <Route
                     path="/myCart" //Path for it to be added to
                     element={<BuyerPageFramework component={<MyCart />} />} />
+                {/** ROUTING FOR DESIGNER NAVBAR AND SMALLNAVBAR */}
+                <Route
+                    path="/discover" //Path for it to be added too
+                    element={<DesignerPageFramework component={<Discover />} />} />
+                <Route
+                    path="/design" //Path for it to be added too
+                    element={<DesignerPageFramework component={<Design />} />} />
+                <Route
+                    path="/construct" //Path for it to be added too
+                    element={<DesignerPageFramework component={<Construct />} />} />
+                <Route
+                    path="/community" //Path for it to be added too
+                    element={<DesignerPageFramework component={<Community />} />} />
+                <Route
+                    path="/support" //Path for it to be added too
+                    element={<DesignerPageFramework component={<Support />} />} />
+                <Route
+                    path="/dummyPages/myAccount" //Path for it to be added too
+                    element={<DesignerPageFramework component={<MyAccount />} />} />
+                {/**must also include small navbar routing like location editor and message inbox */}    
                 <Route
                     path="/dummyPages/sampleProduct" //Path for it to be added too
                     element={<DefaultPageFramework component={<SampleProduct />} />} />

@@ -2,7 +2,6 @@
   .header{
     display: block;
     position: relative;
-    overflow: hidden;
   }
   
   .productPhoto {
@@ -13,10 +12,15 @@
     padding: 20px;
   } 
   
-  .productInfo{
+  .productTitle {
     position: relative;
     bottom: 20px;
     left: 20px;
+    font-size: 15px;
+    padding: 5px;
+  }
+
+  .productInfo {
     font-size: 15px;
     padding: 5px;
   }
