@@ -11,7 +11,7 @@ import axios from 'axios';
 import Seller from "./pages/sellerLandingPage";
 import Designer from "./pages/designerLandingPage";
 import Buyer from "./pages/customerLandingPage";
-import { BuyerPageFramework, SellerPageFramework, DefaultPageFramework } from "./pages/Pageframework";
+import { BuyerPageFramework, SellerPageFramework, DefaultPageFramework, DesignerPageFramework } from "./pages/Pageframework";
 import Structures from "./pages/structures";
 import Brands from "./pages/brands";
 import Company from "./pages/company";
@@ -69,7 +69,7 @@ function App() {
                     path="/login" //Path for it to be added too
                     element={<DefaultPageFramework component={<Login />} />} />
 
-````````````````<Route
+                <Route
                     exact path="/login"
                     element={<Template children={<LoginScreenBase children={<LoginForm />} />} />} />
                 <Route
