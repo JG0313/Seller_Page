@@ -13,14 +13,14 @@ var sellerID;
 var failToLoad = false;
 var hasLoaded = false;
 
-var getUser = "http://localhost:8080/getUserByID?id=";
-var updateUser = "http://localhost:8080/update?id=";
+var getUser = "http://localhost:4000/getUserByID?id=";
+var updateUser = "http://localhost:4000/update?id=";
 
 const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
 function Header() {
           // Get Current Seller ID
-          sellerID = "660b8c7240b171e3ad709c51";
+          sellerID = "661d62911fe2e4118b1a3bef";
           hasLoaded = false;
       
           // Calls the handle data load function once the page loads
