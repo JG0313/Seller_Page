@@ -18,7 +18,7 @@ function BaseEditOverview()
 {
     // Get Current Seller ID
     let user = JSON.parse(localStorage.getItem("user"));
-    sellerID = user._id;
+    sellerID = "661d62911fe2e4118b1a3bef";
     hasLoaded = false;
     const userData = JSON.parse(localStorage.user);
 
