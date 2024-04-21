@@ -171,7 +171,7 @@ function App() {
                         element={<SellerPageFramework component={<NewSellerPage />} />} />
                 </Routes>
                 {/*<Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>*/}
-            <Link to="/sellerPage" className="btn btn-primary"><button>Seller Page</button></Link>
+            {/*<Link to="/sellerPage" className="btn btn-primary"><button>Seller Page</button></Link>*/}
             </Router>
         </div>
     );
