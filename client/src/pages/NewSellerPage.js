@@ -8,7 +8,9 @@ function NewSellerPage({}){
         <div className="SellerPage">
             <div>
                <button>Dashboard</button>
-               <button onClick={() => window.location.href='/edit-overview'}>Profile Customization</button>
+               <button onClick={() =>  window.location.href='/edit-overview'}>
+                Profile Customization
+                </button>
                <button>Quotes Requests</button>
                <button>Messages</button>
                <button>Pans</button>
@@ -16,7 +18,7 @@ function NewSellerPage({}){
                <button>Partnership</button>
             </div>
             <div>
-                <h1>Profile Customization</h1>
+            <h1>Company Name</h1>
                 <div>
                     <button>Overview</button>
                     <button>Projects</button>
