@@ -1,6 +1,6 @@
 import React from "react";
 import '../assets/edit-overview.css';
-import { useState, useEffect } from 'react';
+import { useEffect} from 'react';
 import axios from 'axios';
 
 var seller;
@@ -13,75 +13,85 @@ var updateUser = "http://localhost:4000/update?id=";
 
 const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
-// Define your component
-function BaseEditOverview() {
-    // Define state variables
-    const [seller, setSeller] = useState(null);
-    const [failToLoad, setFailToLoad] = useState(false);
-    const [hasLoaded, setHasLoaded] = useState(false);
+// Renders the edit overview
+function BaseEditOverview()
+{
+    // Get Current Seller ID
+    let user = JSON.parse(localStorage.getItem("user"));
+    sellerID = user._id;
+    hasLoaded = false;
+    const userData = JSON.parse(localStorage.user);
 
-    // Define seller ID using localStorage
-    const user = JSON.parse(localStorage.getItem("user"));
-    const sellerID = user?._id;
+    // Calls the handle data load function once the page loads
+    useEffect(()=> {
+        handleDataLoad();
+    }, [])
 
-    // Call useEffect unconditionally to fetch data
-    useEffect(() => {
-        if (!hasLoaded) {
-            handleDataLoad();
-            setHasLoaded(true);
+    // Handles the retieval and display of user data to the webpage
+    const handleDataLoad = async() =>
+    {
+        // Checks if the page has already been loaded
+        if(hasLoaded) {return;}
+        hasLoaded = true;
+
+        // Attempts to retrieve user data from the database
+        const res = await axios.get(getUser + sellerID)
+
+        // Returns and displays the failure message if there was an error with loading
+        if(res.data === null || res.data.name === "CastError")
+        {
+            failToLoad = true;
+            return;
         }
-    }, [hasLoaded, sellerID]); // Include sellerID in dependency array
 
-    // Function to handle data loading
-    const handleDataLoad = async () => {
-        try {
-            const res = await axios.get(getUser + sellerID);
-            const userData = res.data;
-            if (userData === null || userData.name === "CastError") {
-                setFailToLoad(true);
-                return;
-            }
-            // Retrieves data and fills out fields with previous information
-            document.getElementById('seller_website').value = res.data.seller_website;
-            document.getElementById('seller_summary').value = res.data.seller_summary;
-            document.getElementById('seller_name').innerText = res.data.seller_name;
+        // Retrieves data and fills out fields with previous information
+        document.getElementById('seller_website').value = res.data.seller_website;
+        document.getElementById('seller_summary').value = res.data.seller_summary;
+        document.getElementById('seller_name').innerText = res.data.seller_name;
 
-            // Retrieves data about the seller's products and displays them to the page
-            GetProductsFromID();
+        // Retrieves data about the seller's products and displays them to the page
+        GetProductsFromID();
 
-            // Retrieves data about the seller's partners and displays them to the page
-            res.data.seller_partners.forEach(partner_ID => { GetPartnerFromID(partner_ID); });
+        // Retrieves data about the seller's partners and displays them to the page
+        res.data.seller_partners.forEach(partner_ID => { GetPartnerFromID(partner_ID); });
 
-            // Sets the seller variable to the retrieved data
-            seller = res.data;    
-            setSeller(userData);
-        } catch (error) {
-            console.error("Error loading user data:", error);
-            setFailToLoad(true);
-        }
-    };
+        // Sets the seller variable to the retrieved data
+        seller = res.data;
+    }
 
-    // Function to handle form submission
-    const handleOnSubmit = async (e) => {
+    // Code to handle the submission of updated information
+    // Called when the "save changes button is pressed"
+    const handleOnSubmit = async(e) => {
         e.preventDefault();
-        // Your form submission logic here...
-    };
+        console.log(JSON.stringify(seller));
+        await fetch(
+            updateUser + sellerID, 
+            {
+                method: "post",
+                body: JSON.stringify(seller),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
 
-    // Render UI based on loading and data retrieval status
-    if (failToLoad) {
+        window.location.href='/edit-overview';
+    }
+
+    // Error message that gets displayed when a loading failure occurs
+    if(failToLoad) {
         return (
             <div>
-                <h1>Failed To Retrieve User Data</h1>
+                <h1>
+                    Failed To Retrieve User Data
+                </h1>
             </div>
-        );
+        )
     }
 
-    if (!seller) {
-        return <div>Loading...</div>;
-    }
-
-    return (
-        <div className="editForm">
+    // Returns the editing form
+    return ( 
+    <div className="editForm">
         <form action="">
             <h1> Edit Profile </h1> 
 
