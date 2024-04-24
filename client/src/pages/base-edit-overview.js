@@ -18,9 +18,8 @@ function BaseEditOverview()
 {
     // Get Current Seller ID
     let user = JSON.parse(localStorage.getItem("user"));
-    sellerID = "661d62911fe2e4118b1a3bef";
+    sellerID = user._id;
     hasLoaded = false;
-    const userData = JSON.parse(localStorage.user);
 
     // Calls the handle data load function once the page loads
     useEffect(()=> {
@@ -44,16 +43,35 @@ function BaseEditOverview()
             return;
         }
 
+        console.log(res.data);
+
         // Retrieves data and fills out fields with previous information
-        document.getElementById('seller_website').value = res.data.seller_website;
-        document.getElementById('seller_summary').value = res.data.seller_summary;
-        document.getElementById('seller_name').innerText = res.data.seller_name;
+        document.getElementById('seller_name').innerText = res.data.firstName + " " + res.data.lastName;
+
+        if(!Object.hasOwn(res.data.seller, "seller_website"))
+        {
+            res.data.seller.seller_website = "";
+        }
+
+        document.getElementById('seller_website').value = res.data.seller.seller_website;
+
+        if(!Object.hasOwn(res.data.seller, "seller_summary"))
+        {
+            res.data.seller.seller_summary = "";
+        }
+
+        document.getElementById('seller_summary').value = res.data.seller.seller_summary;
 
         // Retrieves data about the seller's products and displays them to the page
         GetProductsFromID();
 
+        if(!Object.hasOwn(res.data.seller, "seller_partners"))
+        {
+            res.data.seller.seller_partners = [];
+        }
+        
         // Retrieves data about the seller's partners and displays them to the page
-        res.data.seller_partners.forEach(partner_ID => { GetPartnerFromID(partner_ID); });
+        res.data.seller.seller_partners.forEach(partner_ID => { GetPartnerFromID(partner_ID); });
 
         // Sets the seller variable to the retrieved data
         seller = res.data;
@@ -109,14 +127,14 @@ function BaseEditOverview()
 
             <label htmlFor="seller_website">Seller Website:</label><br></br>
             <input type="url" id="seller_website" name="seller_website" 
-            onChange={(e) => seller.seller_website = e.target.value}
+            onChange={(e) => seller.seller.seller_website = e.target.value}
             ></input>
             <br></br>
 
             <label htmlFor="seller_summary">Summary:</label>
             <br></br>
             <textarea id="seller_summary" type="text" name="seller_summary" 
-            onChange={(e) => seller.seller_summary = e.target.value}
+            onChange={(e) => seller.seller.seller_summary = e.target.value}
             ></textarea>
             <br></br>
 
@@ -230,9 +248,9 @@ const GetPartnerFromID = async(partner_ID) =>
     }
 
     // If the entered ID is not saved in the seller's infomation then add it to the list in the seller's information
-    if(!seller.seller_partners.includes(partner_ID) && partner_ID !== sellerID)
+    if(!seller.seller.seller_partners.includes(partner_ID) && partner_ID !== sellerID)
     {
-        seller.seller_partners.push(partner_ID);
+        seller.seller.seller_partners.push(partner_ID);
     }
 
     // Assembling the display for the seller thumbnail 
@@ -259,7 +277,7 @@ function AddPartner()
     document.getElementById('partner_name').value = "";
 
     // return if the ID is the same as the seller's or the id is already present in the list
-    if(seller.seller_partners.includes(partnerID) || partnerID === sellerID) { return; }
+    if(seller.seller.seller_partners.includes(partnerID) || partnerID === sellerID) { return; }
     
     GetPartnerFromID(partnerID);
 }
@@ -268,10 +286,10 @@ function AddPartner()
 function RemovePartner(partner_ID)
 {
     // removes the partner from the list
-    const index = seller.seller_partners.indexOf(partner_ID);
+    const index = seller.seller.seller_partners.indexOf(partner_ID);
 
     if (index > -1) {
-        seller.seller_partners.splice(index, 1);
+        seller.seller.seller_partners.splice(index, 1);
     }
 
     // removes the thumbnail if it exists on the page
