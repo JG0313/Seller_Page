@@ -32,6 +32,7 @@ import './index.css';
 
 import EditPage from './pages/base-edit-overview.js';
 import NewSellerPage from './pages/NewSellerPage.js';
+import LinkedSellerPage from "./pages/LinkedSellerPage.js";
 
 function App() {
 
@@ -169,9 +170,12 @@ function App() {
                     <Route 
                         path="/sellerPage" 
                         element={<SellerPageFramework component={<NewSellerPage />} />} />
+                    <Route 
+                        path="/specificSellerPage/?sellerID=${66295903f2a0f56e58a21f2a}" 
+                        element={<SellerPageFramework component={<LinkedSellerPage />} />} />
                 </Routes>
                 {/*<Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>*/}
-            {/*<Link to="/sellerPage" className="btn btn-primary"><button>Seller Page</button></Link>*/}
+            {/*<Link to="/specificSellerPage/?sellerID=${66295903f2a0f56e58a21f2a}" className="btn btn-primary"><button>Specific Seller Page</button></Link>*/}
             </Router>
         </div>
     );

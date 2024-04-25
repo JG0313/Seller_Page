@@ -21,7 +21,8 @@ const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Defaul
 function NewSellerPage({}){
 
     // Get Current Seller ID
-    sellerID = "661d62911fe2e4118b1a3bef";
+    let user = JSON.parse(localStorage.getItem("user"));
+    sellerID = user._id;
     hasLoaded = false;
 
     // Calls the handle data load function once the page loads
@@ -47,13 +48,23 @@ function NewSellerPage({}){
         }
 
         // Retrieves data and fills out fields with previous information
-        document.getElementById('seller_name').innerText = res.data.seller_name;
-        document.getElementById('seller_name_again').innerText = res.data.seller_name;
-        document.getElementById('seller_website').value = res.data.seller_website;
-        document.getElementById('seller_website').href = res.data.seller_website;
-        document.getElementById('seller_email').innerText = res.data.seller_email;
-        document.getElementById('seller_number').innerText = res.data.seller_phoneNumber; 
-        document.getElementById('seller_summary').innerText = res.data.seller_summary;
+        document.getElementById('seller_name').innerText = res.data.firstName + " " + res.data.lastName;
+        document.getElementById('seller_name_again').innerText = res.data.firstName + " " + res.data.lastName;
+
+        if(!Object.hasOwn(res.data.seller, "seller_website"))
+        {
+            res.data.seller.seller_website = "";
+        }
+
+        document.getElementById('seller_website').value = res.data.seller.seller_website;
+        document.getElementById('seller_website').href = res.data.seller.seller_website;
+
+        if(!Object.hasOwn(res.data.seller, "seller_summary"))
+        {
+            res.data.seller.seller_summary = "";
+        }
+
+        document.getElementById('seller_summary').innerText = res.data.seller.seller_summary;
         
     }
 
@@ -87,8 +98,6 @@ function NewSellerPage({}){
                     <div>
                         <h1 id='seller_name_again' className="seller_name">name</h1>
                         <a id='seller_website' className="seller_website">     Link to Website</a>
-                        <p id='seller_email' className="header-text">markjohnson@gmail.com</p>
-                        <p id='seller_number' className="header-text">555-555-5555</p>
                         <p id='seller_summary' className="header-text">
                             This is just filler text. But perhaps we should limit bios to
                             a 250 word length or something.
