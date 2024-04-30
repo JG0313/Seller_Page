@@ -20,18 +20,20 @@ const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/a/ac/Defaul
 
 function LinkedSellerPage(props)
 {
- // Get Linked Seller ID
- const searchParams = new URLSearchParams(props.location.search);
- const sellerID = searchParams.get('sellerID');
 
+ // Get Linked Seller ID
+ const sellerID = useParams().sellerID;
+ console.log(sellerID);
  // Calls the handle data load function once the page loads
  useEffect(()=> {
+
      handleDataLoad();
  }, [])
 
  // Handles the retieval and display of user data to the webpage
  const handleDataLoad = async() =>
  {
+
      // Checks if the page has already been loaded
      if(hasLoaded) {return;}
      hasLoaded = true;

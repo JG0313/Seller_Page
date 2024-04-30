@@ -4,7 +4,7 @@
 /// </summary>
 
 // Components
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 // Pages
@@ -171,11 +171,11 @@ function App() {
                         path="/sellerPage" 
                         element={<SellerPageFramework component={<NewSellerPage />} />} />
                     <Route 
-                        path="/specificSellerPage/?sellerID=${66295903f2a0f56e58a21f2a}" 
+                        path="/specificSellerPage/:sellerID" 
                         element={<SellerPageFramework component={<LinkedSellerPage />} />} />
                 </Routes>
                 {/*<Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>*/}
-            {/*<Link to="/specificSellerPage/?sellerID=${66295903f2a0f56e58a21f2a}" className="btn btn-primary"><button>Specific Seller Page</button></Link>*/}
+            {<Link to="/specificSellerPage/:sellerID" className="btn btn-primary"><button>Specific Seller Page</button></Link>}
             </Router>
         </div>
     );
