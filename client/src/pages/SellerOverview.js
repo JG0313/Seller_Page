@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import '../assets/App.css';
-import Navbar from '../components/SellersNavbar.js';
+import SellerNavbar from '../components/SellerNavbar.js';
 import Header from '../pages/Header.js';
 import ProductSection from '../pages/ProductSection.js';
 import ImageMidSection from '../pages/ImageMidSection.js';
@@ -12,7 +12,7 @@ function SellerOverview() {
 
     return (
         <div className="app-container">
-            <Navbar />
+            <SellerNavbar />
             <div className="header">
             <Header />
             <div className="content-container">

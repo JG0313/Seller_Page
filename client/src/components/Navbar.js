@@ -5,7 +5,7 @@
 
 import React from "react";
 import { Nav, NavLink, NavMenu, SmallNavMenu, SmallNavLink, SearchContainer, SearchInput, SearchButton } from "./NavbarElements";
-
+import caterpillarLogo from '../assets/caterpillar_logo.png'
 
 export const DefaultNavBar = () => {
     return (
@@ -17,7 +17,7 @@ export const DefaultNavBar = () => {
                 <NavLink to="/houses" activeStyle>
                     Houses
                 </NavLink>
-                <NavLink to="/structures" activeStyle>
+                <NavLink to="/catalog" activeStyle>
                     Structures
                 </NavLink>
                 <NavLink to="/brands" activeStyle>
@@ -48,7 +48,7 @@ export const BuyerNavBar = () => {
                 <NavLink to="/houses" activeStyle>
                     Houses
                 </NavLink>
-                <NavLink to="/structures" activeStyle>
+                <NavLink to="/catalog" activeStyle>
                     Structures
                 </NavLink>
                 <NavLink to="/brands" activeStyle>
@@ -100,24 +100,6 @@ export const SellerNavBar = () => {
     );
 };
 
-export const SmallerDefaultNavBar = () => {
-    return (
-        <smallNav>
-            <SmallNavMenu>
-                <SmallNavLink to="/login" activeStyle>
-                    Login
-                </SmallNavLink>
-                <SmallNavLink to="/location-editor" activeStyle>
-                    Location Editor
-                </SmallNavLink>
-                <SmallNavLink to="/message-inbox" activeStyle>
-                    Message Inbox
-                </SmallNavLink>
-            </SmallNavMenu>
-        </smallNav>
-    );
-};
-
 export const DesignerNavBar = () => {
     return (
         <Nav>
@@ -149,6 +131,27 @@ export const DesignerNavBar = () => {
     );
 };
 
+export const SmallerDefaultNavBar = () => {
+    return (
+        <smallNav>
+            <SmallNavMenu>
+                <SmallNavLink to="/login" activeStyle>
+                    Login
+                </SmallNavLink>
+                <SmallNavLink to="/dummyPages/myfavorites" activeStyle>
+                    My Favorites
+                </SmallNavLink>
+                <SmallNavLink to="/location-editor" activeStyle>
+                    Location Editor
+                </SmallNavLink>
+                <SmallNavLink to="/message-inbox" activeStyle>
+                    Message Inbox
+                </SmallNavLink>
+            </SmallNavMenu>
+        </smallNav>
+    );
+};
+
 export const SmallerSellerNavBar = () => {
     return (
         <smallNav>
@@ -177,7 +180,13 @@ export const SmallerBuyerNavBar = () => {
                 <SmallNavLink to="/dummyPages/myfavorites" activeStyle>
                     My Favorites
                 </SmallNavLink>
-                <SmallNavLink to="/dummyPages/mycart" activeStyle>
+                <SmallNavLink to="/dummyPages/messagesinbox" activeStyle>
+                    Message Inbox
+                </SmallNavLink>
+                <SmallNavLink to="/orders" activeStyle>
+                    Orders
+                </SmallNavLink>
+                <SmallNavLink to="/checkout" activeStyle>
                     <img src={require("../assets/Cart.png")} alt="Cart" height="30"></img>
                 </SmallNavLink>
             </SmallNavMenu>

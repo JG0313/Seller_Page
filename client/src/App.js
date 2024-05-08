@@ -3,16 +3,21 @@
 /// Description: This sript handles all of the links that the files need to navigate to
 /// </summary>
 
+import React, { useState, useEffect } from "react";
+
+import './assets/App.css';
+
 // Components
-import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from './components/Navbar';
+import axios from 'axios';
 
 // Pages
 import Seller from "./pages/sellerLandingPage";
 import Designer from "./pages/designerLandingPage";
 import Buyer from "./pages/customerLandingPage";
 import { BuyerPageFramework, SellerPageFramework, DefaultPageFramework, DesignerPageFramework } from "./pages/Pageframework";
-//import Page from "./pages/DefaultPage";
 import Structures from "./pages/structures";
 import Brands from "./pages/brands";
 import Company from "./pages/company";
@@ -25,20 +30,25 @@ import Community from "./pages/community";
 import Support from "./pages/support";
 import MyAccount from "./pages/dummyPages/myAccount";
 import MyFavorites from "./pages/dummyPages/myFavorites";
-import MyCart from "./pages/myCart";
-import './assets/App.css';
-import { CreateAccountForm, CreateBuyerForm, CreateSellerForm, LoginForm, LoginScreenBase, Template } from './Login';
-import './index.css';
+import CheckoutPage from "./pages/CheckoutPage.js";
+import OrdersPage from "./pages/OrdersPage.js";
+
 
 import EditPage from './pages/base-edit-overview.js';
 import NewSellerPage from './pages/NewSellerPage.js';
 import LinkedSellerPage from "./pages/LinkedSellerPage.js";
+import { CreateAccountForm, CreateBuyerForm, CreateSellerForm, LoginForm, LoginScreenBase, Template } from './Login';
+import './index.css';
+import Product from "./pages/Product";
+import Catalog from "./pages/catalog";
+
+import {APIURL} from './config.js';
 
 function App() {
 
     return (
-        <div>
-            <Router>
+        <Router>
+            <div>
                 <Routes>
                     {/** ROUTING FOR PRESSING THE HOME BUTTONS */}
                     <Route
@@ -114,9 +124,16 @@ function App() {
                     <Route
                         path="/dummyPages/myFavorites" //Path for it to be added too
                         element={<BuyerPageFramework component={<MyFavorites />} />} />
+                    <Route 
+                        path="/checkout"
+                        element={<BuyerPageFramework component={<CheckoutPage/>}/>}/>
+                    <Route 
+                        path="/orders"
+                        element={<BuyerPageFramework component={<OrdersPage/>}/>}/>
                     <Route
-                        path="/myCart" //Path for it to be added to
-                        element={<BuyerPageFramework component={<MyCart />} />} />
+                        path="/structures/:id"
+                        element={<Structures />}
+                    />
                     {/** <Route */}
                     {/**path="/messages" //Path for it to be added to */}
                     {/**element={<BuyerPageFramework component={<MessageInbox />} />} />  */}
@@ -140,6 +157,13 @@ function App() {
                     <Route
                         path="/dummyPages/myAccount" //Path for it to be added too
                         element={<SellerPageFramework component={<MyAccount />} />} />
+
+                    <Route
+                         path="/product/:productId"
+                         element={<BuyerPageFramework component={<Product />} />} />
+                    <Route
+                         path="/catalog"
+                         element={<BuyerPageFramework component={<Catalog />} />} />
                     {/**must also include small navbar routing like location editor and message inbox */}
 
                     {/** ROUTING FOR DESIGNER NAVBAR AND SMALLNAVBAR */}
@@ -162,7 +186,7 @@ function App() {
                         path="/dummyPages/myAccount" //Path for it to be added too
                         element={<DesignerPageFramework component={<MyAccount />} />} />
                     {/**must also include small navbar routing like location editor and message inbox */}
-                    
+
                     {/*SELLER ROUTES*/}
                     <Route 
                         path="/edit-overview" 
@@ -174,18 +198,11 @@ function App() {
                         path="/specificSellerPage/:sellerID" 
                         element={<SellerPageFramework component={<LinkedSellerPage />} />} />
                 </Routes>
-                {/*<Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>*/}
+                   {/*<Link to="/edit-overview" className="btn btn-primary"><button>Edit Page</button></Link>*/}
             {<Link to="/specificSellerPage/:sellerID" className="btn btn-primary"><button>Specific Seller Page</button></Link>}
-            </Router>
-        </div>
+            </div>
+        </Router>
     );
 }
 
 export default App;
-
-
-/*
-                <Route
-                    //path="/" //Path for it to be added too
-                    //element={<BuyerPageFramework component={<Buyer />} />} />
-*/

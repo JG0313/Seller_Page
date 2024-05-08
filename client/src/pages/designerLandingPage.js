@@ -18,12 +18,12 @@ import "../assets/designUpload.css";
 const DesignerLandingPage = () => {
     return (
         <div className="SellerLandingPage">
-
-            <DesignUpload>
+             
+             <DesignUpload>
                 Upload Designs
             </DesignUpload>
-
-            <div className="carousel">
+                
+                <div className="carousel">
                 <AutoplayCarousel />
             </div>
 

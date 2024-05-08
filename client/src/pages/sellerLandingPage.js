@@ -14,7 +14,6 @@ import "../assets/carousel.css";
 
  //Format for seller landing page
 const SellerLandingPage = () => {
-
     return (
         <div className="SellerLandingPage">
 

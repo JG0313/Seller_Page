@@ -3,6 +3,8 @@ import axios from 'axios';
 import Select from 'react-select';
 import { useNavigate } from 'react-router-dom'; 
 
+import {APIURL} from '../config.js';
+
 function UploadForm() {
   const navigate = useNavigate();
   const [imageFiles, setImageFiles] = useState([]);
@@ -50,20 +52,20 @@ function UploadForm() {
       formData.append('pdfFiles', pdfFiles[i]);
     }
 
-    formData.append('tags', tags.join(',')); // Join tags array into a comma-separated string
+    formData.append('tags', tags.join(','));
     formData.append('structureType', structureType);
     formData.append('userId', userId);
     formData.append('price',price);
     console.log("upload client",formData)
 
     try {
-      const response = await axios.post('/api/files/upload', formData, {
+      const response = await axios.post(`${APIURL}/api/files/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       if (response.status === 200) {
-        navigate('/login/design');
+        navigate('/login/designer');
         alert('Files uploaded successfully');
       } else {
         throw new Error('Failed to upload files');
@@ -75,7 +77,7 @@ function UploadForm() {
   };
 
   const handleCancel = () => {
-    navigate('/login/design');
+    navigate('/login/designer');
   };
 
   // Define the tagOptions array

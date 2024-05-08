@@ -5,7 +5,7 @@
 
 import React from "react";
 
-import { SmallNav, BuyerNavBar, SellerNavBar, DesignerNavBar, SmallerSellerNavBar, SmallerBuyerNavBar, SmallerDefaultNavBar, DefaultNavBar} from "../components/Navbar";
+import { BuyerNavBar, SellerNavBar, DesignerNavBar, SmallerSellerNavBar, SmallerBuyerNavBar, SmallerDefaultNavBar, DefaultNavBar} from "../components/Navbar";
 
 // This page component includes the navbar components.
 // Takes in the main page component as a paramater.
